@@ -52,10 +52,9 @@ export default function App() {
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <span className="text-xl font-light text-gray-900">baiom labs</span>
+            <span className="text-2xl font-light text-gray-900">baiom labs</span>
           </div>
-          <div className="flex space-x-8 text-sm">
-            <a href="#research" className="text-gray-600 hover:text-gray-900 transition">Research</a>
+          <div className="flex space-x-8 text-2xl">
             <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">Publications</a>
           </div>
         </div>
@@ -98,9 +97,9 @@ export default function App() {
           <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">Core Technologies</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="border border-gray-200 p-8 rounded-lg">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Translation Models</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-3">Virtual Cell</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                Generative Models Translating Transcriptomics to Morphological Spaces.
+                Predicting Functional Response of Cells to Perturbations
               </p>
             </div>
             <div className="border border-gray-200 p-8 rounded-lg">
@@ -116,9 +115,9 @@ export default function App() {
               </p>
             </div>
             <div className="border border-gray-200 p-8 rounded-lg">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Perturbation Prediction</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-3">Translation Models</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                Transcriptomic and Morphological Responses to Drug Perturbations.
+                Translating Multi-modal Data to Predict Cellular Behavior and Drug Responses.
               </p>
             </div>
           </div>
