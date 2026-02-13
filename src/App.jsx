@@ -52,7 +52,11 @@ export default function App() {
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-full bg-amber-900"></div>
+            <img 
+              src="/logo.png" 
+              alt="baiom labs" 
+              className="w-64 h-auto"
+            />
             <span className="text-xl font-light text-gray-900">baiom labs</span>
           </div>
           <div className="flex space-x-8 text-sm">
