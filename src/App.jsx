@@ -62,7 +62,7 @@ export default function App() {
       </section>
 
       {/* Technology Stack */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-amber-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">Core Technologies & Research</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
