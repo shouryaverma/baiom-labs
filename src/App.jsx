@@ -4,7 +4,7 @@ export default function App() {
   const publications = [
     {
       title: "Joint Modeling of Transcriptomic and Morphological Phenotypes for Generative Molecular Design",
-      authors: "S Verma, M Wang et al.",
+      authors: "M Wang, S Verma et al.",
       venue: "bioRxiv",
       year: "2026",
       doi: "2026.02.02.703193"
@@ -28,21 +28,6 @@ export default function App() {
       authors: "M Wang, S Verma et al.",
       venue: "Neural Information Processing Systems (NeurIPS)",
       year: "2025"
-    }
-  ];
-
-  const researchAreas = [
-    {
-      title: "Perturbation Modeling",
-      description: "Predicting cellular responses to perturbations."
-    },
-    {
-      title: "Virtual Cell",
-      description: "Simulating cellular behavior through generative AI."
-    },
-    {
-      title: "Multi-Modal Integration",
-      description: "Integrating transcriptomic and histopathological data."
     }
   ];
 
@@ -70,23 +55,8 @@ export default function App() {
               className="w-64 h-auto"
             />
             <h1 className="text-5xl md:text-6xl font-light text-gray-900 max-w-4xl leading-tight">
-              Modeling biology
+              Modeling Biology
             </h1>
-          </div>
-        </div>
-      </section>
-
-      {/* Research Areas */}
-      <section id="research" className="py-20 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-light text-gray-900 mb-16 text-center">Research Areas</h2>
-          <div className="grid md:grid-cols-3 gap-12">
-            {researchAreas.map((area, index) => (
-              <div key={index} className="space-y-4">
-                <h3 className="text-xl font-medium text-gray-900">{area.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{area.description}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -94,7 +64,7 @@ export default function App() {
       {/* Technology Stack */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">Core Technologies</h2>
+          <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">Core Technologies & Research</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="border border-gray-200 p-8 rounded-lg">
               <h3 className="text-lg font-medium text-gray-900 mb-3">Virtual Cell</h3>
@@ -109,7 +79,7 @@ export default function App() {
               </p>
             </div>
             <div className="border border-gray-200 p-8 rounded-lg">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Digital Pathology AI</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-3">Digital Pathology</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
                 Open-source Frameworks for Cell-level Annotation and Analysis.
               </p>
