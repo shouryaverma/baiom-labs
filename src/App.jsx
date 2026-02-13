@@ -46,7 +46,7 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-20 px-6 bg-gradient-to-r from-red-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center text-center space-y-8">
             <img 
@@ -62,7 +62,7 @@ export default function App() {
       </section>
 
       {/* Technology Stack */}
-      <section className="py-20 px-6 bg-amber-50">
+      <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">Core Technologies & Research</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
