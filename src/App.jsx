@@ -54,7 +54,7 @@ export default function App() {
           <div className="flex items-center space-x-3">
             <span className="text-2xl font-light text-gray-900">baiom labs</span>
           </div>
-          <div className="flex space-x-8 text-2xl">
+          <div className="flex space-x-8 text-xl">
             <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">Publications</a>
           </div>
         </div>
