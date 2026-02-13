@@ -75,19 +75,19 @@ export default function App() {
             <div className="border border-gray-200 p-8 rounded-lg">
               <h3 className="text-lg font-medium text-gray-900 mb-3">Multi-Modal Integration</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                Joint Modeling of Transcriptomic and Morphological Phenotypes.
+                Modeling Transcriptomic & Morphological Phenotypes.
               </p>
             </div>
             <div className="border border-gray-200 p-8 rounded-lg">
               <h3 className="text-lg font-medium text-gray-900 mb-3">Digital Pathology</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                Open-source Frameworks for Cell-level Annotation and Analysis.
+                Frameworks for Cell-level Annotation and Analysis.
               </p>
             </div>
             <div className="border border-gray-200 p-8 rounded-lg">
               <h3 className="text-lg font-medium text-gray-900 mb-3">Translation Models</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                Translating Multi-modal Data to Predict Cellular Behavior and Drug Responses.
+                Translating Modalities for Cross-Domain Understanding.
               </p>
             </div>
           </div>
