@@ -62,7 +62,7 @@ export default function App() {
       </section>
 
       {/* Technology Stack */}
-      <section className="py-20 px-6 bg-gradient-to-b from-red-50 to-gray-50">
+      <section className="py-20 px-6 bg-gradient-to-b from-white to-red-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">Core Technologies & Research</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -95,7 +95,7 @@ export default function App() {
       </section>
 
       {/* Publications */}
-      <section id="publications" className="py-20 px-6 bg-gray-50">
+      <section id="publications" className="py-20 px-6 bg-gradient-to-b from-red-50 to-blue-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-light text-gray-900 mb-16 text-center">Publications</h2>
           <div className="space-y-8 max-w-4xl mx-auto">
