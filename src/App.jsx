@@ -5,8 +5,8 @@ function Header() {
   return (
     <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-3">
-          <span className="text-2xl font-light text-gray-900 hover:text-gray-700 transition">baiom labs</span>
+        <Link to="/" className="flex space-x-8 text-xl">
+          <span className="text-gray-600 hover:text-gray-900 transition">baiom labs</span>
         </Link>
         <div className="flex space-x-8 text-xl">
           <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">Publications</a>
@@ -65,14 +65,14 @@ function Home() {
 
   const technologies = [
     {
-      title: "Virtual Cell",
+      title: "Perturbation Modeling",
       description: "Predicting Functional Response of Cells to Perturbations",
       route: "/virtual-cell"
     },
     {
-      title: "Molecular Design",
+      title: "Drug Design",
       description: "Multi-modal Generative Modeling of Molecules.",
-      route: "/multi-modal"
+      route: "/drug-design"
     },
     {
       title: "Digital Pathology",
@@ -168,7 +168,7 @@ function VirtualCell() {
       <Header />
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-light text-gray-900 mb-8">Virtual Cell</h1>
+          <h1 className="text-4xl font-light text-gray-900 mb-8">Perturbation Modeling</h1>
           <p className="text-gray-600 leading-relaxed">
             Predicting Functional Response of Cells to Perturbations
           </p>
@@ -179,13 +179,13 @@ function VirtualCell() {
   );
 }
 
-function MultiModal() {
+function DrugDesign() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-light text-gray-900 mb-8">Multi-Modal Integration</h1>
+          <h1 className="text-4xl font-light text-gray-900 mb-8">Drug Design</h1>
           <p className="text-gray-600 leading-relaxed">
             Modeling Transcriptomic & Morphological Phenotypes.
           </p>
@@ -302,7 +302,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/virtual-cell" element={<VirtualCell />} />
-        <Route path="/multi-modal" element={<MultiModal />} />
+        <Route path="/drug-design" element={<DrugDesign />} />
         <Route path="/digital-pathology" element={<DigitalPathology />} />
         <Route path="/translation-models" element={<TranslationModels />} />
       </Routes>
