@@ -206,7 +206,7 @@ function DigitalPathology() {
           <div className="space-y-12">
             <div>
               <img 
-                src="/annotate_main.png" 
+                src="/annotate_main.png"
                 alt="Digital Pathology Main Interface" 
                 className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
               />
@@ -242,20 +242,36 @@ function TranslationModels() {
           <p className="text-gray-600 leading-relaxed mb-12">
             Translating Modalities for Cross-Domain Understanding.
           </p>
-          <div className="space-y-8">
+          <div className="space-y-12">
             <div>
               <img
-                src="Desktop/baiom/public/geneflow_main.png" 
-                alt="GeneCover Workflow" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg"
+                src="/geneflow_main.png" 
+                alt="GeneFlow Workflow" 
+                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
               />
+              <p className="text-gray-600 leading-relaxed">
+                GeneFlow enables translation between single-cell gene expression data and histopathological images, bridging molecular and morphological domains.
+              </p>
             </div>
             <div>
               <img 
-                src="Desktop/baiom/public/geneflow_arch.png" 
+                src="/geneflow_arch.png" 
                 alt="GeneFlow Architecture" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg"
+                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
               />
+              <p className="text-gray-600 leading-relaxed">
+                Our rectified flow-based architecture provides efficient and accurate translation, enabling seamless conversion between transcriptomic and imaging modalities.
+              </p>
+            </div>
+            <div>
+              <img 
+                src="/geneflow_diagnosis.png" 
+                alt="GeneFlow Diagnosis" 
+                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
+              />
+              <p className="text-gray-600 leading-relaxed">
+                Diagnostic applications demonstrate how translated predictions can improve disease understanding and enable cross-modal analysis for clinical insights.
+              </p>
             </div>
           </div>
         </div>
