@@ -203,20 +203,26 @@ function DigitalPathology() {
           <p className="text-gray-600 leading-relaxed mb-12">
             Frameworks for Cell-level Annotation and Analysis.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-12">
             <div>
               <img 
                 src="/annotate_main.png" 
                 alt="Digital Pathology Main Interface" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg"
+                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
               />
+              <p className="text-gray-600 leading-relaxed">
+                The main interface provides an intuitive platform for visualizing and interacting with digital pathology samples at cellular resolution.
+              </p>
             </div>
             <div>
               <img 
                 src="/annotate_output.png" 
                 alt="Digital Pathology Output" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg"
+                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
               />
+              <p className="text-gray-600 leading-relaxed">
+                Annotated outputs demonstrate precise cell-level classification and analysis, enabling comprehensive understanding of tissue composition and cellular relationships.
+              </p>
             </div>
           </div>
         </div>
