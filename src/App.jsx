@@ -70,8 +70,8 @@ function Home() {
       route: "/virtual-cell"
     },
     {
-      title: "Multi-Modal Integration",
-      description: "Modeling Transcriptomic & Morphological Phenotypes.",
+      title: "Molecular Design",
+      description: "Multi-modal Generative Modeling of Molecules.",
       route: "/multi-modal"
     },
     {
@@ -93,13 +93,16 @@ function Home() {
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center text-center space-y-8">
+            <h1 className="text-7xl md:text-7xl font-light text-red-200 max-w-4xl leading-tight">
+              baiom labs
+            </h1>
             <img 
               src="/logo.png" 
               alt="baiom labs" 
               className="w-64 h-auto"
             />
-            <h1 className="text-5xl md:text-6xl font-light text-gray-900 max-w-4xl leading-tight">
-              Modeling Biology
+            <h1 className="text-6xl md:text-5xl font-light text-gray-900 max-w-4xl leading-tight">
+              Modeling Biology. Solving Problems.
             </h1>
           </div>
         </div>
@@ -200,28 +203,32 @@ function DigitalPathology() {
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Digital Pathology</h1>
-          <p className="text-gray-600 leading-relaxed mb-12">
-            Frameworks for Cell-level Annotation and Analysis.
+          <p className="text-xl text-gray-600 leading-relaxed mb-12">
+            We introduce <span className="font-bold text-purple-500">AnnotateAnyCell</span>, a framework for cell-level annotation and analysis in digital pathology.
           </p>
           <div className="space-y-12">
             <div>
               <img 
                 src="/annotate_main.png"
                 alt="Digital Pathology Main Interface" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
+                className="w-full border border-gray-200 rounded-2xl shadow-lg mb-4"
               />
-              <p className="text-gray-600 leading-relaxed">
-                The main interface provides an intuitive platform for visualizing and interacting with digital pathology samples at cellular resolution.
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Intuitive platform for visualizing and interacting with histopathology samples at cellular resolution.
+                <br />
+                Users can navigate through image & embedding space to explore regions of interest, and label cells.
               </p>
             </div>
-            <div>
+            <div className="pt-8">
               <img 
                 src="/annotate_output.png" 
                 alt="Digital Pathology Output" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
+                className="w-full border border-gray-200 rounded-2xl shadow-lg mb-4"
               />
-              <p className="text-gray-600 leading-relaxed">
-                Annotated outputs demonstrate precise cell-level classification and analysis, enabling comprehensive understanding of tissue composition and cellular relationships.
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Annotated outputs demonstrate labeled cell-level classes and analysis for direct download.
+                <br />
+                Users can understand tissue composition and cellular relationships to visualize their labels.
               </p>
             </div>
           </div>
@@ -239,38 +246,46 @@ function TranslationModels() {
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Translation Models</h1>
-          <p className="text-gray-600 leading-relaxed mb-12">
-            Translating Modalities for Cross-Domain Understanding.
+          <p className="text-xl text-gray-600 leading-relaxed mb-12">
+            We introduce <span className="font-bold text-blue-500">GeneFlow</span>, a framework to map transcriptomics onto paired cellular H&E images.
           </p>
           <div className="space-y-12">
             <div>
               <img
                 src="/geneflow_main.png" 
                 alt="GeneFlow Workflow" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
+                className="w-full mb-4"
               />
-              <p className="text-gray-600 leading-relaxed">
-                GeneFlow enables translation between single-cell gene expression data and histopathological images, bridging molecular and morphological domains.
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Enables generation of realistic cellular morphology features from transcriptomic data.
+                <br />
+                Visualizing spatially resolved intercellular interactions from gene expression profiles.
               </p>
             </div>
+            <div className="pt-8"></div>
             <div>
               <img 
                 src="/geneflow_arch.png" 
                 alt="GeneFlow Architecture" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
+                className="w-full mb-4"
               />
-              <p className="text-gray-600 leading-relaxed">
-                Our rectified flow-based architecture provides efficient and accurate translation, enabling seamless conversion between transcriptomic and imaging modalities.
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Architecture of the GeneFlow model for mapping transcriptomes to histology images.
+                <br />
+                Leveraging rectified flow dynamics, our method consistently outperforms alternatives.
               </p>
             </div>
+            <div className="pt-8"></div>
             <div>
               <img 
                 src="/geneflow_diagnosis.png" 
                 alt="GeneFlow Diagnosis" 
-                className="w-full border border-gray-200 rounded-lg shadow-lg mb-4"
+                className="w-full mb-4"
               />
-              <p className="text-gray-600 leading-relaxed">
-                Diagnostic applications demonstrate how translated predictions can improve disease understanding and enable cross-modal analysis for clinical insights.
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Generate diagnostic features like pleomorphic nuclei, keratinizing squamous epithelium, collagenous stroma.
+                <br />
+                Enabling pathologist to reach consistent interpretations with high confidence relative to ground truth.
               </p>
             </div>
           </div>
