@@ -9,7 +9,7 @@ function Header() {
           <span className="text-gray-600 hover:text-gray-900 transition">baiom labs</span>
         </Link>
         <div className="flex space-x-8 text-xl">
-          <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">Publications</a>
+          <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">publications</a>
         </div>
       </div>
     </nav>
@@ -67,7 +67,7 @@ function Home() {
     {
       title: "Perturbation Modeling",
       description: "Predicting Functional Response of Cells to Perturbations",
-      route: "/virtual-cell"
+      route: "/perturbation-modeling"
     },
     {
       title: "Drug Design",
@@ -162,16 +162,54 @@ function Home() {
   );
 }
 
-function VirtualCell() {
+function PerturbationModeling() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Perturbation Modeling</h1>
-          <p className="text-gray-600 leading-relaxed">
-            Predicting Functional Response of Cells to Perturbations
+          <p className="text-xl text-gray-600 leading-relaxed mb-12">
+            We introduce <span className="font-bold text-red-400">PertFlow</span>, a framework for predicting joint perturbed transcriptome and morphology states.
           </p>
+          <div className="space-y-12">
+            <div>
+              <img 
+                src="/pertflow_main.png"
+                alt="PertFlow Main Interface" 
+                className="w-full mb-4"
+              />
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Cross-modal mapping from control RNA-seq and image to treatment RNA-seq and image with drug conditioning.
+                <br />
+                Visualize comparison of generated treatment vs real treatment images with drug name and concentration.
+              </p>
+            </div>
+            <div className="pt-8">
+              <img 
+                src="/pertflow_arch.png" 
+                alt="PertFlow Architecture" 
+                className="w-full mb-4"
+              />
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Input RNA-seq and image going through their respective encoders.
+                <br />
+                Pass through shared encoder along with conditioning from drug encoder.
+                <br />
+                Output heads decode perturbed transcriptome and morphology respectively.
+              </p>
+            </div>
+            <div className="pt-8">
+              <img 
+                src="/pertflow_results.png" 
+                alt="PertFlow Results" 
+                className="w-full mb-4"
+              />
+              <p className="text-xl text-gray-600 leading-relaxed">
+              Generated vs real treatment for Aortic Smooth Muscle, A549, and Dermal Fibroblast Cells.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
       <Footer />
@@ -184,11 +222,37 @@ function DrugDesign() {
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Drug Design</h1>
-          <p className="text-gray-600 leading-relaxed">
-            Modeling Transcriptomic & Morphological Phenotypes.
+          <p className="text-xl text-gray-600 leading-relaxed mb-12">
+            We introduce <span className="font-bold text-yellow-500">Pert2Mol</span>, a framework for multi-modal phenotype-to-structure generation.
           </p>
+          <div className="space-y-12">
+            <div>
+              <img 
+                src="/pert2mol_main.png"
+                alt="Pert2Mol Main Interface" 
+                className="w-full mb-4"
+              />
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Transcritome and Morphological features are extracted from their respective encoders.
+                <br />
+                A transformer learns to generate SMILES string of the drug that caused the perturbation.
+              </p>
+            </div>
+            <div className="pt-8">
+              <img 
+                src="/pert2mol_mols.png"
+                alt="Pert2Mol Output" 
+                className="w-full mb-4"
+              />
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Results show accurate SMILES generation for a variety of drugs with different mechanisms of action.
+                <br />
+                Our Pert2Mol is compared against diffusion baseline along with RNA & image only models variants.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
       <Footer />
@@ -262,8 +326,7 @@ function TranslationModels() {
                 Visualizing spatially resolved intercellular interactions from gene expression profiles.
               </p>
             </div>
-            <div className="pt-8"></div>
-            <div>
+            <div className="pt-8">
               <img 
                 src="/geneflow_arch.png" 
                 alt="GeneFlow Architecture" 
@@ -275,8 +338,7 @@ function TranslationModels() {
                 Leveraging rectified flow dynamics, our method consistently outperforms alternatives.
               </p>
             </div>
-            <div className="pt-8"></div>
-            <div>
+            <div className="pt-8">
               <img 
                 src="/geneflow_diagnosis.png" 
                 alt="GeneFlow Diagnosis" 
@@ -301,7 +363,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/virtual-cell" element={<VirtualCell />} />
+        <Route path="/perturbation-modeling" element={<PerturbationModeling />} />
         <Route path="/drug-design" element={<DrugDesign />} />
         <Route path="/digital-pathology" element={<DigitalPathology />} />
         <Route path="/translation-models" element={<TranslationModels />} />
