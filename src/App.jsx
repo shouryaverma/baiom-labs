@@ -36,7 +36,7 @@ function Home() {
       venue: "bioRxiv",
       year: "2026",
       doi: "2026.02.02.703193",
-      url: "https://doi.org/10.1101/2026.02.02.703193"
+      url: "https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1"
     },
     {
       title: "Generating Joint Transcriptomic and Morphological Responses to Drug Perturbations via Rectified Flow",
@@ -44,7 +44,7 @@ function Home() {
       venue: "bioRxiv",
       year: "2026",
       doi: "2026.02.02.703189",
-      url: "https://doi.org/10.1101/2026.02.02.703189"
+      url: "https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1"
     },
     {
       title: "AnnotateAnyCell: Open-Source AI Framework for Efficient Annotation in Digital Pathology",
@@ -52,13 +52,14 @@ function Home() {
       venue: "bioRxiv",
       year: "2025",
       doi: "2025.11.02.686114",
-      url: "https://doi.org/10.1101/2025.11.02.686114"
+      url: "https://www.biorxiv.org/content/10.1101/2025.11.02.686114v1"
     },
     {
       title: "GeneFlow: Translation of Single-cell Gene Expression to Histopathological Images via Rectified Flow",
       authors: "M Wang, S Verma et al.",
       venue: "Neural Information Processing Systems (NeurIPS)",
-      year: "2025"
+      year: "2025",
+      url: "https://arxiv.org/abs/2511.00119"
     }
   ];
 
@@ -197,11 +198,27 @@ function DigitalPathology() {
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Digital Pathology</h1>
-          <p className="text-gray-600 leading-relaxed">
+          <p className="text-gray-600 leading-relaxed mb-12">
             Frameworks for Cell-level Annotation and Analysis.
           </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <img 
+                src="/main.png" 
+                alt="Digital Pathology Main Interface" 
+                className="w-full border border-gray-200 rounded-lg shadow-lg"
+              />
+            </div>
+            <div>
+              <img 
+                src="/output.png" 
+                alt="Digital Pathology Output" 
+                className="w-full border border-gray-200 rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
         </div>
       </section>
       <Footer />
@@ -214,11 +231,27 @@ function TranslationModels() {
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Translation Models</h1>
-          <p className="text-gray-600 leading-relaxed">
+          <p className="text-gray-600 leading-relaxed mb-12">
             Translating Modalities for Cross-Domain Understanding.
           </p>
+          <div className="space-y-8">
+            <div>
+              <img 
+                src="/Screenshot_2026-02-16_at_04-16-14_geneflow-cr_-_geneflow-cr_pdf.png" 
+                alt="GeneFlow Architecture" 
+                className="w-full border border-gray-200 rounded-lg shadow-lg"
+              />
+            </div>
+            <div>
+              <img 
+                src="/Screenshot_2026-02-16_at_04-16-03_genecover_drawio_pdf_-_genecover_pdf.png" 
+                alt="GeneCover Workflow" 
+                className="w-full border border-gray-200 rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
         </div>
       </section>
       <Footer />
