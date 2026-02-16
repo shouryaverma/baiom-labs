@@ -206,14 +206,14 @@ function DigitalPathology() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <img 
-                src="/main.png" 
+                src="/annotate_main.png" 
                 alt="Digital Pathology Main Interface" 
                 className="w-full border border-gray-200 rounded-lg shadow-lg"
               />
             </div>
             <div>
               <img 
-                src="/output.png" 
+                src="/annotate_output.png" 
                 alt="Digital Pathology Output" 
                 className="w-full border border-gray-200 rounded-lg shadow-lg"
               />
@@ -238,16 +238,16 @@ function TranslationModels() {
           </p>
           <div className="space-y-8">
             <div>
-              <img 
-                src="/Screenshot_2026-02-16_at_04-16-14_geneflow-cr_-_geneflow-cr_pdf.png" 
-                alt="GeneFlow Architecture" 
+              <img
+                src="Desktop/baiom/public/geneflow_main.png" 
+                alt="GeneCover Workflow" 
                 className="w-full border border-gray-200 rounded-lg shadow-lg"
               />
             </div>
             <div>
               <img 
-                src="/Screenshot_2026-02-16_at_04-16-03_genecover_drawio_pdf_-_genecover_pdf.png" 
-                alt="GeneCover Workflow" 
+                src="Desktop/baiom/public/geneflow_arch.png" 
+                alt="GeneFlow Architecture" 
                 className="w-full border border-gray-200 rounded-lg shadow-lg"
               />
             </div>
