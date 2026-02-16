@@ -1,18 +1,153 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 
-function Header() {
+function ContactModal({ isOpen, onClose }) {
+  const [formData, setFormData] = React.useState({
+    name: '',
+    affiliation: '',
+    email: '',
+    message: ''
+  });
+  const [status, setStatus] = React.useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    try {
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service_id: 'service_j3yowha',
+          template_id: 'template_04fa5oe',
+          user_id: 'svCaDQSXgOe7BSIrP',
+          template_params: {
+            to_email: 'verma198@purdue.edu',
+            from_name: formData.name,
+            from_email: formData.email,
+            affiliation: formData.affiliation,
+            message: formData.message,
+          }
+        })
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', affiliation: '', email: '', message: '' });
+        setTimeout(() => {
+          onClose();
+          setStatus('');
+        }, 2000);
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
+  };
+
+  if (!isOpen) return null;
+
   return (
-    <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="flex space-x-8 text-xl">
-          <span className="text-gray-600 hover:text-gray-900 transition">baiom labs</span>
-        </Link>
-        <div className="flex space-x-8 text-xl">
-          <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">publications</a>
-        </div>
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg max-w-2xl w-full p-8 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl"
+        >
+          ×
+        </button>
+        
+        <h2 className="text-4xl font-light text-gray-900 mb-6">Contact Us For</h2>
+        <h2 className="text-3xl font-light text-gray-900 mb-6">Demo. Collaboration. Chat.</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+            <input
+              type="text"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Affiliation</label>
+            <input
+              type="text"
+              required
+              value={formData.affiliation}
+              onChange={(e) => setFormData({...formData, affiliation: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+            <textarea
+              required
+              rows="4"
+              value={formData.message}
+              onChange={(e) => setFormData({...formData, message: e.target.value})}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          
+          <button
+            type="submit"
+            disabled={status === 'sending'}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
+          >
+            {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent!' : 'Send Message'}
+          </button>
+          
+          {status === 'error' && (
+            <p className="text-red-600 text-center">Failed to send. Please try again.</p>
+          )}
+        </form>
       </div>
-    </nav>
+    </div>
+  );
+}
+
+function Header() {
+  const [contactOpen, setContactOpen] = React.useState(false);
+
+  return (
+    <>
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <Link to="/" className="flex space-x-8 text-xl">
+            <span className="text-gray-600 hover:text-gray-900 transition">baiom labs</span>
+          </Link>
+          <div className="flex space-x-8 text-xl">
+            <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">publications</a>
+            <button
+              onClick={() => setContactOpen(true)}
+              className="text-gray-600 hover:text-gray-900 transition"
+            >
+              contact
+            </button>
+          </div>
+        </div>
+      </nav>
+      <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+    </>
   );
 }
 
@@ -116,7 +251,7 @@ function Home() {
               <div 
                 key={index}
                 onClick={() => navigate(tech.route)}
-                className="border border-gray-200 p-8 rounded-lg cursor-pointer hover:border-gray-400 hover:shadow-lg transition"
+                className="border border-gray-200 p-8 rounded-lg cursor-pointer hover:border-gray-400 hover:bg-red-50 hover:shadow-lg transition"
               >
                 <h3 className="text-lg font-medium text-gray-900 mb-3">{tech.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
