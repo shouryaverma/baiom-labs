@@ -136,7 +136,7 @@ function Header() {
             <span className="text-gray-600 hover:text-gray-900 transition">baiom labs</span>
           </Link>
           <div className="flex space-x-8 text-xl">
-            <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">publications</a>
+            {/* <a href="#publications" className="text-gray-600 hover:text-gray-900 transition">publications</a> */}
             <button
               onClick={() => setContactOpen(true)}
               className="text-gray-600 hover:text-gray-900 transition"
@@ -234,7 +234,7 @@ function Home() {
             <img 
               src="/logo.png" 
               alt="baiom labs" 
-              className="w-64 h-auto"
+              className="w-40 h-auto"
             />
             <h1 className="text-6xl md:text-5xl font-light text-gray-900 max-w-4xl leading-tight">
               Modeling Biology. Solving Problems.
@@ -245,7 +245,7 @@ function Home() {
 
       <section className="py-20 px-6 bg-gradient-to-b from-white to-red-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">Core Technologies & Research</h2>
+          <h2 className="text-4xl font-light text-gray-900 mb-12 text-center">Core Technologies & Research</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {technologies.map((tech, index) => (
               <div 
@@ -253,7 +253,7 @@ function Home() {
                 onClick={() => navigate(tech.route)}
                 className="border border-gray-200 p-8 rounded-lg cursor-pointer hover:border-gray-400 hover:bg-red-50 hover:shadow-lg transition"
               >
-                <h3 className="text-lg font-medium text-gray-900 mb-3">{tech.title}</h3>
+                <h3 className="text-xl font-medium text-gray-900 mb-3">{tech.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   {tech.description}
                 </p>
@@ -265,7 +265,7 @@ function Home() {
 
       <section id="publications" className="py-20 px-6 bg-gradient-to-b from-red-50 to-blue-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-light text-gray-900 mb-16 text-center">Publications</h2>
+          <h2 className="text-4xl font-light text-gray-900 mb-16 text-center">Publications</h2>
           <div className="space-y-8 max-w-4xl mx-auto">
             {publications.map((pub, index) => (
               <div key={index} className="border-l-2 border-amber-900 pl-6 py-2">
@@ -302,10 +302,10 @@ function PerturbationModeling() {
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="space-y-8 max-w-4xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Perturbation Modeling</h1>
           <p className="text-xl text-gray-600 leading-relaxed mb-12">
-            We introduce <span className="font-bold text-red-400">PertFlow</span>, a framework for predicting joint perturbed transcriptome and morphology states.
+            <span className="font-bold text-red-400">PertFlow</span>, a framework for predicting joint perturbed transcriptome and morphology states.
           </p>
           <div className="space-y-12">
             <div>
@@ -315,9 +315,9 @@ function PerturbationModeling() {
                 className="w-full mb-4"
               />
               <p className="text-xl text-gray-600 leading-relaxed">
-                Cross-modal mapping from control RNA-seq and image to treatment RNA-seq and image with drug conditioning.
+                Mapping from control RNA-seq and image to treatment RNA-seq and image with drug conditioning.
                 <br />
-                Visualize comparison of generated treatment vs real treatment images with drug name and concentration.
+                Comparison of generated treatment vs real treatment images with drug name and concentration.
               </p>
             </div>
             <div className="pt-8">
@@ -357,10 +357,10 @@ function DrugDesign() {
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="space-y-8 max-w-4xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Drug Design</h1>
           <p className="text-xl text-gray-600 leading-relaxed mb-12">
-            We introduce <span className="font-bold text-yellow-500">Pert2Mol</span>, a framework for multi-modal phenotype-to-structure generation.
+            <span className="font-bold text-yellow-500">Pert2Mol</span>, a framework for multi-modal phenotype-to-structure generation.
           </p>
           <div className="space-y-12">
             <div>
@@ -400,13 +400,23 @@ function DigitalPathology() {
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="space-y-8 max-w-4xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Digital Pathology</h1>
           <p className="text-xl text-gray-600 leading-relaxed mb-12">
-            We introduce <span className="font-bold text-purple-500">AnnotateAnyCell</span>, a framework for cell-level annotation and analysis in digital pathology.
+            <span className="font-bold text-purple-500">AnnotateAnyCell</span>, a framework for cell-level annotation and analysis in digital pathology.
           </p>
           <div className="space-y-12">
             <div>
+              <img 
+                src="/annotate_arch.png"
+                alt="Digital Pathology Architecture" 
+                className="w-full mb-4"
+              />
+              <p className="text-xl text-gray-600 leading-relaxed">
+                AnnotateAnyCell framework's complete pipeline from image pre-processing to output interface.
+              </p>
+            </div>
+            <div className="pt-8">
               <img 
                 src="/annotate_main.png"
                 alt="Digital Pathology Main Interface" 
@@ -443,10 +453,10 @@ function TranslationModels() {
     <div className="min-h-screen bg-white">
       <Header />
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="space-y-8 max-w-4xl mx-auto">
           <h1 className="text-4xl font-light text-gray-900 mb-8">Translation Models</h1>
           <p className="text-xl text-gray-600 leading-relaxed mb-12">
-            We introduce <span className="font-bold text-blue-500">GeneFlow</span>, a framework to map transcriptomics onto paired cellular H&E images.
+            <span className="font-bold text-blue-500">GeneFlow</span>, a framework to map transcriptomics onto paired cellular H&E images.
           </p>
           <div className="space-y-12">
             <div>
@@ -480,7 +490,7 @@ function TranslationModels() {
                 className="w-full mb-4"
               />
               <p className="text-xl text-gray-600 leading-relaxed">
-                Generate diagnostic features like pleomorphic nuclei, keratinizing squamous epithelium, collagenous stroma.
+                Generate diagnostic features: pleomorphic nuclei, keratinizing squamous epithelium, collagenous stroma.
                 <br />
                 Enabling pathologist to reach consistent interpretations with high confidence relative to ground truth.
               </p>
