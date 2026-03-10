@@ -369,7 +369,7 @@ function DrugDesign() {
                 alt="Pert2Mol Main Interface" 
                 className="w-full mb-4"
               />
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-xl text-gray-600 leading-relaxed"> 
                 Transcritome and Morphological features are extracted from their respective encoders.
                 <br />
                 A transformer learns to generate SMILES string of the drug that caused the perturbation.
