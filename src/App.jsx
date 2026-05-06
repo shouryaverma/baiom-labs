@@ -351,7 +351,7 @@ function Home() {
   const technologies = [
     { title: "Multi-Modal Perturbation", description: "Predicting Multi-Modal Molecular Perturbations",   route: "/mulit-modal-pert" },
     { title: "Drug Design",              description: "Multi-modal Generative Modeling of Molecules.",    route: "/drug-design"           },
-    { title: "Digital Pathology",        description: "Frameworks for Cell-level Annotation and Analysis",route: "/digital-pathology"     },
+    { title: "Digital Pathology",        description: "Cell-level Annotation and Analysis Framework",     route: "/digital-pathology"     },
     { title: "Cellular Translation",     description: "Translating Modalities for Cross-Domain Insights", route: "/cellular-translation"    },
     { title: "Single-Cell Perturbation", description: "Single-Cell Functional Response to Perturbations", route: "/single-cell-pert" },
     { title: "3D Medical Imaging",       description: "Aligning Tomographic Medical Volumes",             route: "/medical-imaging"       },
