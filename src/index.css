@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 html {
-  font-size: 130%;
+  font-size: 140%;
 }
 
 @keyframes fadeUp {

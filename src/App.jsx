@@ -308,7 +308,7 @@ function Footer() {
 
 function SectionLabel({ children }) {
   return (
-    <p style={{ fontFamily: F.body, fontWeight: 500, fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: C.textFaint, marginBottom: '12px', textAlign: 'center' }}>
+    <p style={{ fontFamily: F.body, fontWeight: 500, fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: C.red, marginBottom: '12px', textAlign: 'center' }}>
       {children}
     </p>
   );
@@ -375,7 +375,7 @@ function Home() {
           }}>
             baiom labs
           </h1>
-          <p className="fade-up-1" style={{ fontFamily: F.body, fontWeight: 300, fontSize: '1rem', color: C.textSub, letterSpacing: '0.06em', margin: 0 }}>
+          <p className="fade-up-1" style={{ fontFamily: F.body, fontWeight: 300, fontSize: '1rem', color: C.red, letterSpacing: '0.06em', margin: 0 }}>
             Modeling Biology. Solving Problems.
           </p>
         </div>
@@ -388,7 +388,7 @@ function Home() {
           <h2 style={{ fontFamily: F.body, fontWeight: 200, fontSize: '1.75rem', color: C.text, textAlign: 'center', letterSpacing: '-0.02em', marginBottom: '40px' }}>
             Research & Applications
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', maxWidth: '950px', margin: '0 auto' }}>
             {technologies.map((tech, i) => (
               <TechCard key={i} tech={tech} onClick={() => navigate(tech.route)} />
             ))}
