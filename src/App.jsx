@@ -421,7 +421,7 @@ function DetailPage({ title, productName, productAccent, description, sections }
     <div style={{ backgroundColor: C.bg, minHeight: '100vh' }}>
       <Header />
       <section style={{ paddingTop: '110px', paddingBottom: '96px', paddingLeft: '40px', paddingRight: '40px' }}>
-        <div style={{ maxWidth: '820px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <p style={{ fontFamily: F.body, fontWeight: 500, fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: C.textFaint, marginBottom: '14px' }}>
             Research
           </p>
