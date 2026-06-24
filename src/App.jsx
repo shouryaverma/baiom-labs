@@ -101,7 +101,7 @@ const SystemDiagram = () => (
       <circle cx="66" cy="218" r="2.5" opacity="0.45" />
     </g>
     <text x="84" y="208" fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>spatial transcriptomics</text>
-    <text x="84" y="222" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>spatial expression map</text>
+    <text x="84" y="222" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>expression map</text>
  
     {/* PERTURBATION content — shifted +50px from original */}
     <text x="46" y="288" fontFamily={F.mono} fontSize="10" letterSpacing="1.5" fill={C.textFaint}>PERTURBATION TYPE</text>
@@ -156,7 +156,7 @@ const SystemDiagram = () => (
       <circle cx="828" cy="218" r="2.5" opacity="0.45" />
     </g>
     <text x="844" y="208" fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>spatial transcriptomics</text>
-    <text x="844" y="222" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>spatial expression map</text>
+    <text x="844" y="222" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>expression map</text>
 
     <text x="806" y="288" fontFamily={F.mono} fontSize="10" letterSpacing="1.5" fill={C.red}>INVERSE DRUG DESIGN</text>
     
@@ -564,7 +564,7 @@ function Home() {
           {/* Blurb + paper links */}
           <div className="fade-up-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '44px' }}>
             <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.88rem', color: C.textSub, lineHeight: 1.9, margin: 0 }}>
-              We develop multi-modal models on human cellular and molecular data so they learn the patterns governing drug response, toxicity, and cross-modal cellular translation
+              We develop multi-modal models on human cellular and molecular data to learn the patterns governing drug response, toxicity, and cross-modal cellular translation
             </p>
             <div>
               {platformLinks.map(link => (
