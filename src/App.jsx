@@ -479,8 +479,8 @@ function Home() {
 
   const publications = [
     { title: "Joint Modeling of Transcriptomic and Morphological Phenotypes for Generative Molecular Design",          authors: "M Wang, S Verma et al.", shortVenue: "ISMB",    year: "2026", url: "https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1"    },
-    { title: "Generating Joint Transcriptomic and Morphological Responses to Drug Perturbations via Rectified Flow",   authors: "S Verma, M Wang et al.", shortVenue: "ISMB",    year: "2026", url: "https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1"    },
-    { title: "AnnotateAnyCell: Open-Source AI Framework for Efficient Annotation in Digital Pathology",                authors: "S Verma, A Malusare et al.", shortVenue: "bioRxiv", year: "2025", url: "https://www.biorxiv.org/content/10.1101/2025.11.02.686114v1" },
+    { title: "Generating Joint Transcriptomic and Morphological Responses to Drug Perturbations via Rectified Flow",   authors: "S Verma, M Wang et al.", shortVenue: "ISMB",    year: "2026", url: "https://www.biorxiv.org/content/10.64898/2026.02.02.703189v3"    },
+    { title: "AnnotateAnyCell: Open-Source AI Framework for Efficient Annotation in Digital Pathology",                authors: "S Verma, A Malusare et al.", shortVenue: "bioRxiv", year: "2025", url: "https://www.biorxiv.org/content/10.1101/2025.11.02.686114v3" },
     { title: "GeneFlow: Translation of Single-cell Gene Expression to Histopathological Images via Rectified Flow",    authors: "M Wang, S Verma et al.", shortVenue: "NeurIPS", year: "2025", url: "https://arxiv.org/abs/2511.00119"                                  },
   ];
 
