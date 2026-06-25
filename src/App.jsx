@@ -226,14 +226,14 @@ function PublicationItem({ pub }) {
   const [hovered, setHovered] = React.useState(false);
 
   const inner = (
-    <div style={{
-      display:             'grid',
-      gridTemplateColumns: '110px 1fr 28px',
-      gap:                 '24px',
-      alignItems:          'flex-start',
-      padding:             '22px 0',
-      borderTop:           `1px solid ${C.border}`,
-    }}>
+      <div className="pub-grid" style={{
+        display:             'grid',
+        gridTemplateColumns: '110px 1fr 28px',
+        gap:                 '24px',
+        alignItems:          'flex-start',
+        padding:             '22px 0',
+        borderTop:           `1px solid ${C.border}`,
+      }}>
       <p style={{ fontFamily: F.body, fontWeight: 500, fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: hovered ? C.red : C.textFaint, margin: 0, paddingTop: '2px', transition: 'color 0.18s' }}>
         {pub.shortVenue || pub.venue} {pub.year}
       </p>
@@ -438,7 +438,7 @@ function Header() {
         backdropFilter:  scrolled ? 'blur(12px)' : 'none',
         transition:      'all 0.25s ease',
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '18px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="nav-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '18px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Link to="/" style={{ fontFamily: F.body, fontWeight: 300, fontSize: '1.05rem', color: C.text, textDecoration: 'none', letterSpacing: '0.04em' }}>
             baiom labs
           </Link>
@@ -510,7 +510,7 @@ function Home() {
 
       {/* ── Landing ───────────────────────────────────────────── */}
       <section style={{ paddingTop: '120px', paddingBottom: '20px' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+        <div className="section-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
 
           {/* Name */}
           <h1 className="fade-up" style={{
@@ -550,7 +550,7 @@ function Home() {
           </div>
 
           {/* Blurb + paper links */}
-          <div className="fade-up-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '44px' }}>
+          <div className="fade-up-2 responsive-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '44px' }}>
             <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.88rem', color: C.textSub, lineHeight: 1.9, margin: 0 }}>
               We develop multi-modal models on human cellular and molecular data to learn the patterns governing drug response, toxicity, and cross-modal cellular translation
             </p>
@@ -585,10 +585,10 @@ function Home() {
 
       {/* ── Products ──────────────────────────────────────────── */}
       <section style={{ borderTop: `1px solid ${C.border}`, paddingBottom: '20px' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
+        <div className="responsive-section" style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
           <p style={sectionLabelStyle}>Products</p>
           <h2 style={sectionHeadingStyle}>Scientific Applications</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+          <div className="responsive-3col" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
             {technologies.map((tech, i) => (
               <TechCard key={i} tech={tech} index={i + 1} onClick={() => navigate(tech.route)} />
             ))}
@@ -598,7 +598,7 @@ function Home() {
 
       {/* ── Publications ──────────────────────────────────────── */}
       <section style={{ borderTop: `1px solid ${C.border}`, paddingBottom: '20px' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
+        <div className="responsive-section" style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
           <p style={sectionLabelStyle}>Publications</p>
           <h2 style={sectionHeadingStyle}>Peer-Reviewed &amp; Open-Source</h2>
           <div style={{ borderBottom: `1px solid ${C.border}` }}>
