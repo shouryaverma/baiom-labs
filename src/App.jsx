@@ -587,7 +587,7 @@ function Home() {
       <section style={{ borderTop: `1px solid ${C.border}`, paddingBottom: '20px' }}>
         <div className="responsive-section" style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
           <p style={sectionLabelStyle}>Products</p>
-          <h2 style={sectionHeadingStyle}>Scientific Applications</h2>
+          <h2 style={sectionHeadingStyle}>Biological Applications</h2>
           <div className="responsive-3col" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
             {technologies.map((tech, i) => (
               <TechCard key={i} tech={tech} index={i + 1} onClick={() => navigate(tech.route)} />
