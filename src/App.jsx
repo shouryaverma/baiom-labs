@@ -190,30 +190,32 @@ function TechCard({ tech, index, onClick }) {
         transition:      'border-color 0.2s ease, box-shadow 0.2s ease',
         boxShadow:       hovered ? '0 8px 32px rgba(0,0,0,0.05)' : 'none',
         position:        'relative',
+        minHeight:       '200px',
+        display:         'flex',
+        flexDirection:   'column',
       }}
     >
-      <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.62rem', color: C.textFaint, letterSpacing: '0.04em', margin: '0 0 18px' }}>
-        {String(index).padStart(2, '0')}
-      </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '18px' }}>
+        <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.62rem', color: C.textFaint, letterSpacing: '0.04em', margin: 0 }}>
+          {String(index).padStart(2, '0')}
+        </p>
+        <span style={{
+          fontFamily: F.body,
+          fontSize:   '0.9rem',
+          color:      hovered ? C.red : C.textFaint,
+          opacity:    hovered ? 1 : 0,
+          transform:  hovered ? 'translate(0,0)' : 'translate(4px,-4px)',
+          transition: 'all 0.2s ease',
+        }}>
+          →
+        </span>
+      </div>
       <h3 style={{ fontFamily: F.body, fontWeight: 400, fontSize: '0.92rem', color: C.text, margin: '0 0 8px', letterSpacing: '-0.01em' }}>
         {tech.title}
       </h3>
       <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.8rem', color: C.textSub, lineHeight: 1.65, margin: 0 }}>
         {tech.description}
       </p>
-      <span style={{
-        position:   'absolute',
-        bottom:     '22px',
-        right:      '22px',
-        fontFamily: F.body,
-        fontSize:   '0.9rem',
-        color:      hovered ? C.red : C.textFaint,
-        opacity:    hovered ? 1 : 0,
-        transform:  hovered ? 'translate(0,0)' : 'translate(-4px,4px)',
-        transition: 'all 0.2s ease',
-      }}>
-        →
-      </span>
     </div>
   );
 }
@@ -223,7 +225,7 @@ function TechCard({ tech, index, onClick }) {
 function PublicationItem({ pub }) {
   const [hovered, setHovered] = React.useState(false);
 
-  return (
+  const inner = (
     <div style={{
       display:             'grid',
       gridTemplateColumns: '110px 1fr 28px',
@@ -232,40 +234,39 @@ function PublicationItem({ pub }) {
       padding:             '22px 0',
       borderTop:           `1px solid ${C.border}`,
     }}>
-      <p style={{ fontFamily: F.body, fontWeight: 500, fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: C.textFaint, margin: 0, paddingTop: '2px' }}>
+      <p style={{ fontFamily: F.body, fontWeight: 500, fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: hovered ? C.red : C.textFaint, margin: 0, paddingTop: '2px', transition: 'color 0.18s' }}>
         {pub.shortVenue || pub.venue} {pub.year}
       </p>
       <div>
-        <p style={{ fontFamily: F.body, fontWeight: 400, fontSize: '0.88rem', color: C.text, lineHeight: 1.55, margin: '0 0 6px' }}>
+        <p style={{ fontFamily: F.body, fontWeight: 400, fontSize: '0.88rem', color: hovered ? C.red : C.text, lineHeight: 1.55, margin: '0 0 6px', transition: 'color 0.18s' }}>
           {pub.title}
         </p>
         <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.75rem', color: C.textFaint, margin: 0 }}>
           {pub.authors}
         </p>
       </div>
-      {pub.url ? (
-        <a
-          href={pub.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          style={{
-            display:        'flex',
-            alignItems:     'flex-start',
-            justifyContent: 'center',
-            paddingTop:     '2px',
-            color:          hovered ? C.red : C.textFaint,
-            textDecoration: 'none',
-            fontSize:       '0.9rem',
-            transition:     'color 0.18s',
-          }}
-        >
-          ↗
-        </a>
-      ) : <div />}
+      <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: '2px', color: hovered ? C.red : C.textFaint, fontSize: '0.9rem', transition: 'color 0.18s' }}>
+        ↗
+      </span>
     </div>
   );
+
+  if (pub.url) {
+    return (
+      <a
+        href={pub.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{ textDecoration: 'none', display: 'block' }}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return inner;
 }
 
 // ── ContactModal ──────────────────────────────────────────────────────────────
@@ -498,7 +499,7 @@ function Home() {
     { label: 'Read the Pert2Mol Paper (ISMB \'26)',    url: 'https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1' },
   ];
 
-  const sectionLabelStyle   = { fontFamily: F.body, fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: C.red, margin: 0, paddingTop: '6px' };
+  const sectionLabelStyle = { fontFamily: F.body, fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: C.red, margin: '0 0 14px', paddingTop: '6px' };
   const sectionHeadingStyle = { fontFamily: F.body, fontWeight: 200, fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', color: C.text, letterSpacing: '-0.025em', lineHeight: 1.1, margin: '0 0 40px' };
   const twoColSection       = { maxWidth: '1200px', margin: '0 auto', padding: '80px 40px', display: 'grid', gridTemplateColumns: '200px 1fr', gap: '60px', alignItems: 'start' };
 
@@ -548,19 +549,6 @@ function Home() {
             <SystemDiagram />
           </div>
 
-          {/* Caption */}
-          <p className="fade-up-1" style={{
-            fontFamily:    F.mono,
-            fontSize:      '0.72rem',
-            color:         C.red,
-            margin:        '0 0 48px',
-            letterSpacing: '0.04em',
-            lineHeight:    1.7,
-            maxWidth:      '1100px',
-          }}>
-            <strong>VirSCell-1</strong> learns from paired single-cell gene-expression and morphology measurements to predict cellular response to drug &amp; genetic perturbations — and, in reverse, to design new perturbations toward a target state
-          </p>
-
           {/* Blurb + paper links */}
           <div className="fade-up-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '44px' }}>
             <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.88rem', color: C.textSub, lineHeight: 1.9, margin: 0 }}>
@@ -597,30 +585,26 @@ function Home() {
 
       {/* ── Products ──────────────────────────────────────────── */}
       <section style={{ borderTop: `1px solid ${C.border}`, paddingBottom: '20px' }}>
-        <div style={twoColSection}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
           <p style={sectionLabelStyle}>Products</p>
-          <div>
-            <h2 style={sectionHeadingStyle}>Scientific Applications</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '12px' }}>
-              {technologies.map((tech, i) => (
-                <TechCard key={i} tech={tech} index={i + 1} onClick={() => navigate(tech.route)} />
-              ))}
-            </div>
+          <h2 style={sectionHeadingStyle}>Scientific Applications</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+            {technologies.map((tech, i) => (
+              <TechCard key={i} tech={tech} index={i + 1} onClick={() => navigate(tech.route)} />
+            ))}
           </div>
         </div>
       </section>
 
       {/* ── Publications ──────────────────────────────────────── */}
       <section style={{ borderTop: `1px solid ${C.border}`, paddingBottom: '20px' }}>
-        <div style={twoColSection}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
           <p style={sectionLabelStyle}>Publications</p>
-          <div>
-            <h2 style={sectionHeadingStyle}>Peer-Reviewed &amp; Open-Source</h2>
-            <div style={{ borderBottom: `1px solid ${C.border}` }}>
-              {publications.map((pub, i) => (
-                <PublicationItem key={i} pub={pub} />
-              ))}
-            </div>
+          <h2 style={sectionHeadingStyle}>Peer-Reviewed &amp; Open-Source</h2>
+          <div style={{ borderBottom: `1px solid ${C.border}` }}>
+            {publications.map((pub, i) => (
+              <PublicationItem key={i} pub={pub} />
+            ))}
           </div>
         </div>
       </section>
