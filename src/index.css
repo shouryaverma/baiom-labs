@@ -17,10 +17,3 @@ html {
 .fade-up   { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .fade-up-1 { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
 .fade-up-2 { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
-
-@keyframes blobMorph {
-  0%   { border-radius: 62% 38% 34% 66% / 58% 32% 68% 42%; }
-  33%  { border-radius: 42% 58% 62% 38% / 46% 64% 36% 54%; }
-  66%  { border-radius: 54% 46% 38% 62% / 64% 38% 62% 36%; }
-  100% { border-radius: 62% 38% 34% 66% / 58% 32% 68% 42%; }
-}
