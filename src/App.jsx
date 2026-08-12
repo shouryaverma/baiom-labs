@@ -30,9 +30,9 @@ const PRODUCTS = {
   },
   pert2mol: {
     product: 'Pert2Mol',
-    title: 'Drug Design',
+    title: 'Inverse Drug Design',
     description: 'A framework for multi-modal phenotype-to-structure generation — from an observed cellular response back to the molecule that caused it.',
-    url: 'https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1',
+    url: 'https://www.biorxiv.org/content/10.64898/2026.02.02.703189v2',
     figures: [
       { slot: 'pert2mol_main.png', caption: 'Transcriptomic and morphological features are extracted by their respective encoders; a transformer generates the SMILES string of the drug that caused the perturbation.' },
       { slot: 'pert2mol_mols.png', caption: 'Accurate SMILES generation across drugs with different mechanisms of action, benchmarked against a diffusion baseline and RNA-only / image-only variants.' }
@@ -264,7 +264,7 @@ export default function App({ showDevelopment = true }) {
                   </button>
                   <button className="x4" onClick={open.pert2mol} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
                     <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #a87428;")}>02 / Pert2Mol</span>
-                    <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Drug Design</span>
+                    <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Inverse Drug Design</span>
                     <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Multi-modal generative modeling of molecules.</span>
                     <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
                   </button>
