@@ -136,12 +136,12 @@ export default function App({ showDevelopment = true }) {
         </nav>
       
         <section style={s("max-width: 1240px; margin: 0 auto; padding: 104px 40px 0; animation: fu 0.7s cubic-bezier(0.16,1,0.3,1) both;")}>
-          <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; letter-spacing: 0.18em; text-transform: uppercase; color: #c04832; margin: 0 0 28px")}>Multi-modal virtual cell world models</p>
+          <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #c04832; margin: 0 0 28px")}>Multi-modal virtual cell world models</p>
           
           <h1 style={s("font-size: clamp(1.6rem, 4.4vw, 3.4rem); font-weight: 200; letter-spacing: -0.035em; line-height: 1.04; margin: 0; max-width: 20ch; text-wrap: balance; width: 839px; height: 158px")}>Predicting cell response, before the experiment.</h1><div style={s("display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 64px; align-items: end; margin-top: 44px; padding-bottom: 64px;")}>
             <p style={s("font-size: 1.4rem; font-weight: 300; line-height: 1.85; color: #64646e; margin: 0; max-width: 46ch")}>We develop models on cellular and molecular data to learn the patterns governing perturbation response.</p>
             <div style={s("display: flex; flex-direction: column;")}>
-              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: #a3a29b; margin: 0 0 6px")}>Latest work</p>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 6px")}>Latest work</p>
               <a className="x3" href="https://arxiv.org/abs/2511.00119" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5")}><span>GeneFlow — NeurIPS '25</span><span style={s("color: #a3a29b;")}>↗</span></a>
               <a className="x3" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5")}><span>PertFlow — ISMB '26</span><span style={s("color: #a3a29b;")}>↗</span></a>
               <a className="x3" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5; border-bottom: 1px solid #e2ded5")}><span>Pert2Mol — ISMB '26</span><span style={s("color: #a3a29b;")}>↗</span></a>
@@ -149,18 +149,18 @@ export default function App({ showDevelopment = true }) {
           </div>
         </section>
       
-        <section style={s("border-top: 1px solid #e2ded5; background: linear-gradient(#f4f3ed, #efeee7);")}>
+        <section style={s("border-top: 1px solid #e2ded5; border-bottom: 1px solid #e2ded5; background: #111113;")}>
           <div style={s("max-width: 1240px; margin: 0 auto; padding: 56px 40px 64px;")}>
             <div style={s("display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 40px;")}>
-              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: #a3a29b; margin: 0")}>The model</p>
-              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0")}>VirSCell-1</p>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0")}>The model</p>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0")}>VirSCell-1</p>
             </div>
       
             <div style={s("display: grid; grid-template-columns: minmax(0,1fr) 96px minmax(0,0.72fr) 96px minmax(0,1fr); align-items: center; gap: 0;")}>
       
               <div style={s("display: flex; flex-direction: column; gap: 12px;")}>
-                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #a3a29b; margin: 0 0 2px")}>Inputs</p>
-                <div style={s("background: #fdfdfa; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0 0 2px")}>Inputs</p>
+                <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
                   <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e; margin: 0 0 18px")}>Initial cell state</p>
                   <div style={s("display: flex; flex-direction: column; gap: 16px;")}>
                     <div style={s("display: flex; align-items: center; gap: 14px;")}>
@@ -177,30 +177,30 @@ export default function App({ showDevelopment = true }) {
                     </div>
                   </div>
                 </div>
-                <div style={s("background: #fdfdfa; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+                <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
                   <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e; margin: 0 0 14px;")}>Perturbation type</p>
                   <div style={s("display: flex; flex-wrap: wrap; gap: 8px;")}>
-                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1px solid #e2ded5; border-radius: 999px; background: #efeee7;")}>Drug</span>
-                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1px solid #e2ded5; border-radius: 999px; background: #efeee7;")}>Genetic</span>
-                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1px solid #e2ded5; border-radius: 999px; background: #efeee7;")}>Cytokine</span>
+                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Drug</span>
+                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Genetic</span>
+                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Cytokine</span>
                   </div>
                 </div>
               </div>
       
               <div style={s("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 120px; padding: 80px 8px 0;")}>
                 <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Encode</p>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Encode</p>
                   <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
                 </div>
                 <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Condition</p>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Condition</p>
                   <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
                 </div>
               </div>
       
-              <div style={s("background: #fdfdfa; border: 1px solid #d4cfc3; border-radius: 18px; padding: 26px 22px; margin-top: 80px; box-shadow: 0 14px 44px rgba(17,17,19,0.06);")}>
+              <div style={s("background: #efeee7; border: 1px solid #d4cfc3; border-radius: 18px; padding: 26px 22px; margin-top: 80px; box-shadow: 0 14px 44px rgba(17,17,19,0.06);")}>
                 <p style={s("font-size: 1.02rem; font-weight: 500; color: #c04832; text-align: center; margin: 0;")}>VirSCell-1</p>
-                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #a3a29b; text-align: center; margin: 6px 0 22px;")}>Virtual Cell World Model</p>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #111113; text-align: center; margin: 6px 0 22px;")}>Virtual Cell World Model</p>
                 <svg viewBox="0 0 140 96" width="100%" style={s("display: block; height: auto;")}>
                   <g stroke="#c04832" strokeWidth="1.1" opacity="0.3"><path d="M22,12 L118,12"></path><path d="M22,36 L118,36"></path><path d="M22,60 L118,60"></path><path d="M22,84 L118,84"></path></g>
                   <g stroke="#a3a29b" strokeWidth="0.9" opacity="0.5"><path d="M22,12 L118,84"></path><path d="M22,84 L118,12"></path><path d="M22,36 L118,60"></path><path d="M22,60 L118,36"></path></g>
@@ -210,18 +210,18 @@ export default function App({ showDevelopment = true }) {
       
               <div style={s("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 120px; padding: 80px 8px 0;")}>
                 <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Predict</p>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Predict</p>
                   <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
                 </div>
                 <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Design</p>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Design</p>
                   <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
                 </div>
               </div>
       
               <div style={s("display: flex; flex-direction: column; gap: 12px;")}>
-                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #a3a29b; margin: 0 0 2px; text-align: right")}>Outputs</p>
-                <div style={s("background: #fdfdfa; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0 0 2px; text-align: right")}>Outputs</p>
+                <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
                   <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 18px")}>Perturbed cell state</p>
                   <div style={s("display: flex; flex-direction: column; gap: 16px;")}>
                     <div style={s("display: flex; align-items: center; gap: 14px;")}>
@@ -238,7 +238,7 @@ export default function App({ showDevelopment = true }) {
                     </div>
                   </div>
                 </div>
-                <div style={s("background: #fdfdfa; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+                <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
                   <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 14px;")}>Inverse drug design</p>
                   <div style={s("display: flex; align-items: center; gap: 14px;")}>
                     <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g transform="translate(13 13) rotate(-45)"><rect x="-11" y="-5.5" width="22" height="11" rx="5.5" fill="none" stroke="#c04832" strokeWidth="1.4"></rect><path d="M0,-5.5 L-5.5,-5.5 A5.5,5.5 0 0,0 -5.5,5.5 L0,5.5 Z" fill="#c04832"></path></g></svg>
@@ -257,37 +257,37 @@ export default function App({ showDevelopment = true }) {
                 <h2 style={s("font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 200; letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 36px;")}>Biological applications</h2>
                 <div style={s("display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1px; background: #e2ded5; border: 1px solid #e2ded5; border-radius: 14px; overflow: hidden;")}>
                   <button className="x4" onClick={open.pertflow} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
-                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #c04832;")}>01 / PertFlow</span>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: #c04832;")}>01 / PertFlow</span>
                     <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Multi-Modal Perturbation</span>
                     <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Predicting multi-modal molecular perturbations.</span>
-                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
+                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #c04832;")}>→</span>
                   </button>
                   <button className="x4" onClick={open.pert2mol} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
-                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #a87428;")}>02 / Pert2Mol</span>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: #c04832;")}>02 / Pert2Mol</span>
                     <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Inverse Drug Design</span>
                     <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Multi-modal generative modeling of molecules.</span>
-                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
+                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #c04832;")}>→</span>
                   </button>
                   <button className="x4" onClick={open.annotate} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
-                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #6e4ea8;")}>03 / AnnotateAnyCell</span>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: #c04832;")}>03 / AnnotateAnyCell</span>
                     <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Digital Pathology</span>
                     <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Cell-level annotation and analysis framework.</span>
-                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
+                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #c04832;")}>→</span>
                   </button>
                   <button className="x4" onClick={open.geneflow} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
-                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #2a8ca4;")}>04 / GeneFlow</span>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: #c04832;")}>04 / GeneFlow</span>
                     <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Cellular Translation</span>
                     <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Translating modalities for cross-domain insights.</span>
-                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
+                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #c04832;")}>→</span>
                   </button>
                   {showDevelopment && (<>
                     <div style={s("background: #f4f3ed; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px;")}>
-                      <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #a3a29b;")}>05 / In development</span>
+                      <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: #a3a29b;")}>05 / In development</span>
                       <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #64646e;")}>Single-Cell Perturbation</span>
                       <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #a3a29b;")}>Single-cell functional response to perturbations.</span>
                     </div>
                     <div style={s("background: #f4f3ed; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px;")}>
-                      <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #a3a29b;")}>06 / In development</span>
+                      <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: #a3a29b;")}>06 / In development</span>
                       <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #64646e;")}>3D Medical Imaging</span>
                       <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #a3a29b;")}>Aligning tomographic medical volumes.</span>
                     </div>
@@ -303,24 +303,24 @@ export default function App({ showDevelopment = true }) {
               <h2 style={s("font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 200; letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 36px;")}>Recent papers</h2>
               <div style={s("display: flex; flex-direction: column;")}>
                 <a className="x5" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1" target="_blank" rel="noopener noreferrer" style={s("display: grid; grid-template-columns: 96px minmax(0,1fr) 24px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid #e2ded5; text-decoration: none;")}>
-                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #a3a29b; padding-top: 3px;")}>ISMB 2026</span>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #c04832; padding-top: 3px;")}>ISMB 2026</span>
                   <span><span style={s("display: block; font-size: 0.94rem; font-weight: 400; line-height: 1.5; color: #111113;")}>Joint Modeling of Transcriptomic and Morphological Phenotypes for Generative Molecular Design</span><span style={s("display: block; font-size: 0.78rem; font-weight: 300; color: #a3a29b; margin-top: 5px;")}>M Wang, S Verma et al.</span></span>
-                  <span style={s("color: #a3a29b; text-align: right; padding-top: 3px;")}>↗</span>
+                  <span style={s("color: #c04832; text-align: right; padding-top: 3px;")}>↗</span>
                 </a>
                 <a className="x5" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703189v3" target="_blank" rel="noopener noreferrer" style={s("display: grid; grid-template-columns: 96px minmax(0,1fr) 24px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid #e2ded5; text-decoration: none;")}>
-                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #a3a29b; padding-top: 3px;")}>ISMB 2026</span>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #c04832; padding-top: 3px;")}>ISMB 2026</span>
                   <span><span style={s("display: block; font-size: 0.94rem; font-weight: 400; line-height: 1.5; color: #111113;")}>Generating Joint Transcriptomic and Morphological Responses to Drug Perturbations via Rectified Flow</span><span style={s("display: block; font-size: 0.78rem; font-weight: 300; color: #a3a29b; margin-top: 5px;")}>S Verma, M Wang et al.</span></span>
-                  <span style={s("color: #a3a29b; text-align: right; padding-top: 3px;")}>↗</span>
+                  <span style={s("color: #c04832; text-align: right; padding-top: 3px;")}>↗</span>
                 </a>
                 <a className="x5" href="https://www.biorxiv.org/content/10.1101/2025.11.02.686114v3" target="_blank" rel="noopener noreferrer" style={s("display: grid; grid-template-columns: 96px minmax(0,1fr) 24px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid #e2ded5; text-decoration: none;")}>
-                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #a3a29b; padding-top: 3px;")}>bioRxiv 2025</span>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #c04832; padding-top: 3px;")}>bioRxiv 2025</span>
                   <span><span style={s("display: block; font-size: 0.94rem; font-weight: 400; line-height: 1.5; color: #111113;")}>AnnotateAnyCell: Open-Source AI Framework for Efficient Annotation in Digital Pathology</span><span style={s("display: block; font-size: 0.78rem; font-weight: 300; color: #a3a29b; margin-top: 5px;")}>S Verma, A Malusare et al.</span></span>
-                  <span style={s("color: #a3a29b; text-align: right; padding-top: 3px;")}>↗</span>
+                  <span style={s("color: #c04832; text-align: right; padding-top: 3px;")}>↗</span>
                 </a>
                 <a className="x5" href="https://arxiv.org/abs/2511.00119" target="_blank" rel="noopener noreferrer" style={s("display: grid; grid-template-columns: 96px minmax(0,1fr) 24px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid #e2ded5; border-bottom: 1px solid #e2ded5; text-decoration: none;")}>
-                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #a3a29b; padding-top: 3px;")}>NeurIPS 2025</span>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #c04832; padding-top: 3px;")}>NeurIPS 2025</span>
                   <span><span style={s("display: block; font-size: 0.94rem; font-weight: 400; line-height: 1.5; color: #111113;")}>GeneFlow: Translation of Single-cell Gene Expression to Histopathological Images via Rectified Flow</span><span style={s("display: block; font-size: 0.78rem; font-weight: 300; color: #a3a29b; margin-top: 5px;")}>M Wang, S Verma et al.</span></span>
-                  <span style={s("color: #a3a29b; text-align: right; padding-top: 3px;")}>↗</span>
+                  <span style={s("color: #c04832; text-align: right; padding-top: 3px;")}>↗</span>
                 </a>
               </div>
             </div>
@@ -330,7 +330,7 @@ export default function App({ showDevelopment = true }) {
         <section style={s("border-top: 1px solid #e2ded5; background: #111113;")}>
           <div style={s("max-width: 1240px; margin: 0 auto; padding: 76px 40px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 48px; align-items: end;")}>
             <div>
-              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0 0 16px;")}>Get in touch</p>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px;  font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0 0 16px;")}>Get in touch</p>
               <h2 style={s("font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 200; letter-spacing: -0.03em; line-height: 1.12; color: #f8f7f2; margin: 0; max-width: 26ch;")}>Demo, collaboration, or a conversation about virtual cells.</h2>
             </div>
             <button className="x6" onClick={openContact} style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #111113; background: #f8f7f2; border: none; border-radius: 999px; padding: 15px 30px; cursor: pointer; white-space: nowrap; transition: background 0.18s;")}>Contact us</button>
