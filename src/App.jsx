@@ -1,754 +1,411 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import './index.css';
 
-const C = {
-  bg:          '#efeee7',
-  surface:     '#f8f7f2',
-  border:      '#dedad2',
-  borderHover: '#bfbcb5',
-  text:        '#111113',
-  textSub:     '#64646e',
-  textFaint:   '#a8a8b0',
-  red:         '#c04832',
-  amber:       '#a87428',
-  teal:        '#2a8ca4',
-  purple:      '#6e4ea8',
+// Parse a CSS text string into a React style object.
+const styleCache = {};
+const s = (css) => {
+  if (styleCache[css]) return styleCache[css];
+  const o = {};
+  css.split(';').forEach((rule) => {
+    const i = rule.indexOf(':');
+    if (i < 0) return;
+    const k = rule.slice(0, i).trim().replace(/-([a-z])/g, (m, c) => c.toUpperCase());
+    if (k) o[k] = rule.slice(i + 1).trim();
+  });
+  styleCache[css] = o;
+  return o;
 };
 
-const F = {
-  body: '"Urbanist", sans-serif',
-  mono: '"IBM Plex Mono", monospace',
-};
-
-// ── SystemDiagram ─────────────────────────────────────────────────────────────
-
-const Heatmap = ({ x, y, ops, color }) => (
-  <g fill={color}>
-    {ops.map((o, i) => (
-      <rect key={i} x={x + (i % 3) * 9} y={y + (i < 3 ? 0 : 9)} width="7" height="7" opacity={o} />
-    ))}
-  </g>
-);
-
-const SystemDiagram = () => (
-  <svg viewBox="55 75 1010 260" width="100%" style={{ display: 'block', height: 'auto', overflow: 'visible' }}>
-    <defs>
-      <marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
-        <path d="M1.5,1 L7.5,4 L1.5,7" fill="none" stroke={C.red} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      </marker>
-    </defs>
- 
-    <text x="140"  y="50"  fontFamily={F.mono} fontSize="18" letterSpacing="2" fill={C.textFaint}>INPUTS</text>
-    <text x="560" y="136" textAnchor="middle" fontFamily={F.mono} fontSize="18" letterSpacing="2" fill={C.textFaint}>MODEL</text>
-    <text x="895" y="50"  fontFamily={F.mono} fontSize="18" letterSpacing="2" fill={C.textFaint}>OUTPUTS</text>
- 
-    {/* Connector trunk — two inputs only */}
-    <g fill="none" stroke={C.red} strokeWidth="1.4">
-      <path d="M330,144 L380,144" />
-      <path d="M330,316 L380,316" />
-      <path d="M380,144 L380,316" />
-    </g>
-    <circle cx="380" cy="144" r="3" fill={C.red} />
-    <circle cx="380" cy="316" r="3" fill={C.red} />
-    <circle cx="728" cy="144" r="3" fill={C.red} />
-    <circle cx="728" cy="316" r="3" fill={C.red} />
- 
-    <g fill="none" stroke={C.red} strokeWidth="1.6">
-      <path d="M380,230 L446,230" markerEnd="url(#ah)" />
-      <path d="M668,230 L728,230" />
-      <path d="M728,144 L728,316" />
-      <path d="M728,144 L784,144" markerEnd="url(#ah)" />
-      <path d="M728,316 L784,316" markerEnd="url(#ah)" />
-    </g>
-    <circle cx="380" cy="230" r="3" fill={C.red} />
-    <circle cx="728" cy="230" r="3" fill={C.red} />
- 
-    <text x="392" y="222" fontFamily={F.mono} fontSize="10" letterSpacing="1.5" fill={C.red}>ENCODE</text>
-    <text x="734" y="135" fontFamily={F.mono} fontSize="10"   letterSpacing="1.5" fill={C.red}>PREDICT</text>
-    <text x="734" y="330" fontFamily={F.mono} fontSize="10"   letterSpacing="1.5" fill={C.red}>DESIGN</text>
- 
-    {/* Input boxes — INITIAL CELL STATE (3 modalities) + PERTURBATION */}
-    <rect x="30"  y="64"  width="300" height="174" rx="14" fill="#ffffff" stroke={C.border} filter="url(#cardsh)" />
-    <rect x="30"  y="264" width="300" height="90" rx="14" fill="#ffffff" stroke={C.border} filter="url(#cardsh)" />
-    <rect x="452" y="150" width="216" height="160" rx="18" fill="#ffffff" stroke="#cfccc2" strokeWidth="1.5" filter="url(#cardsh)" />
-    <rect x="790" y="64"  width="300" height="174" rx="14" fill="#ffffff" stroke={C.border} filter="url(#cardsh)" />
-    <rect x="790" y="264" width="300" height="90" rx="14" fill="#ffffff" stroke={C.border} filter="url(#cardsh)" />
- 
-    {/* INITIAL CELL STATE content */}
-    <text x="46" y="88" fontFamily={F.mono} fontSize="10" letterSpacing="1.5" fill={C.textFaint}>INITIAL CELL STATE</text>
- 
-    {/* Modality 1: cell images */}
-    <circle cx="57" cy="120" r="12" fill="none" stroke={C.text} strokeWidth="1.3" />
-    <circle cx="57" cy="120" r="4"  fill={C.textSub} />
-    <text x="84" y="116"  fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>cell images</text>
-    <text x="84" y="130" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>cell morphology</text>
- 
-    {/* Modality 2: gene expression */}
-    <Heatmap x={44} y={158} ops={[0.8, 0.32, 0.6, 0.42, 0.72, 0.28]} color={C.text} />
-    <text x="84" y="164" fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>gene expression</text>
-    <text x="84" y="178" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>expression profile</text>
- 
-    {/* Modality 3: spatial transcriptomics — 3×3 spot grid */}
-    <g fill={C.text}>
-      <circle cx="48" cy="200" r="2.5" opacity="0.85" />
-      <circle cx="57" cy="200" r="2.5" opacity="0.35" />
-      <circle cx="66" cy="200" r="2.5" opacity="0.65" />
-      <circle cx="48" cy="209" r="2.5" opacity="0.50" />
-      <circle cx="57" cy="209" r="2.5" opacity="0.90" />
-      <circle cx="66" cy="209" r="2.5" opacity="0.25" />
-      <circle cx="48" cy="218" r="2.5" opacity="0.60" />
-      <circle cx="57" cy="218" r="2.5" opacity="0.80" />
-      <circle cx="66" cy="218" r="2.5" opacity="0.45" />
-    </g>
-    <text x="84" y="208" fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>spatial transcriptomics</text>
-    <text x="84" y="222" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>expression map</text>
- 
-    {/* PERTURBATION content — shifted +50px from original */}
-    <text x="46" y="288" fontFamily={F.mono} fontSize="10" letterSpacing="1.5" fill={C.textFaint}>PERTURBATION TYPE</text>
-    <rect x="46"  y="302" width="52" height="30" rx="8" fill={C.bg} stroke={C.border} />
-    <text x="72"  y="321" textAnchor="middle" fontFamily={F.body} fontSize="13" fill={C.text}>Drug</text>
-    <rect x="106" y="302" width="74" height="30" rx="8" fill={C.bg} stroke={C.border} />
-    <text x="143" y="321" textAnchor="middle" fontFamily={F.body} fontSize="13" fill={C.text}>Genetic</text>
-    <rect x="188" y="302" width="74" height="30" rx="8" fill={C.bg} stroke={C.border} />
-    <text x="225" y="321" textAnchor="middle" fontFamily={F.body} fontSize="13" fill={C.text}>Cytokine</text>
-
-    <text x="560" y="178" textAnchor="middle" fontFamily={F.body} fontSize="16" fontWeight="500" fill={C.red}>VirSCell-1</text>
-    <text x="560" y="196" textAnchor="middle" fontFamily={F.mono} fontSize="12" letterSpacing="1" fill={C.textFaint}>Perturbation Model</text>
-    <g stroke={C.red} strokeWidth="1.3" opacity="0.32">
-      <path d="M506,222 L614,222" />
-      <path d="M506,244 L614,244" />
-      <path d="M506,266 L614,266" />
-      <path d="M506,288 L614,288" />
-    </g>
-    <g stroke={C.textFaint} strokeWidth="1" opacity="0.55">
-      <path d="M506,222 L614,288" />
-      <path d="M506,288 L614,222" />
-    </g>
-    <g fill={C.text}>
-      {[222, 244, 266, 288].map((y) => <circle key={'l' + y} cx="506" cy={y} r="3" />)}
-      {[222, 244, 266, 288].map((y) => <circle key={'r' + y} cx="614" cy={y} r="3" />)}
-    </g>
-
-    {/* PERTURBED CELL STATE content */}
-    <text x="806" y="90" fontFamily={F.mono} fontSize="10" letterSpacing="1.5" fill={C.red}>PERTURBED CELL STATE</text>
- 
-    {/* Modality 1: cell images */}
-    <circle cx="818" cy="120" r="12" fill="none" stroke={C.text} strokeWidth="1.3" />
-    <circle cx="821" cy="122" r="4"  fill={C.red} />
-    <text x="844" y="116"  fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>cell images</text>
-    <text x="844" y="130" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>cell morphology</text>
- 
-    {/* Modality 2: gene expression */}
-    <Heatmap x={806} y={158} ops={[0.8, 0.32, 0.6, 0.42, 0.72, 0.28]} color={C.red} />
-    <text x="844" y="164" fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>gene expression</text>
-    <text x="844" y="178" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>expression profile</text>
- 
-    {/* Modality 3: spatial transcriptomics — 3×3 spot grid */}
-    <g fill={C.red}>
-      <circle cx="810" cy="200" r="2.5" opacity="0.85" />
-      <circle cx="819" cy="200" r="2.5" opacity="0.35" />
-      <circle cx="828" cy="200" r="2.5" opacity="0.65" />
-      <circle cx="810" cy="209" r="2.5" opacity="0.50" />
-      <circle cx="819" cy="209" r="2.5" opacity="0.90" />
-      <circle cx="828" cy="209" r="2.5" opacity="0.25" />
-      <circle cx="810" cy="218" r="2.5" opacity="0.60" />
-      <circle cx="819" cy="218" r="2.5" opacity="0.80" />
-      <circle cx="828" cy="218" r="2.5" opacity="0.45" />
-    </g>
-    <text x="844" y="208" fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>spatial transcriptomics</text>
-    <text x="844" y="222" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>expression map</text>
-
-    <text x="806" y="288" fontFamily={F.mono} fontSize="10" letterSpacing="1.5" fill={C.red}>INVERSE DRUG DESIGN</text>
-    
-    {/* Modality 4: Pill Icon for Candidate Drug */}
-    <g transform="translate(820, 316) rotate(-45)">
-      <rect x="-12" y="-6" width="24" height="12" rx="6" fill="none" stroke={C.red} strokeWidth="1.5" />
-      <path d="M 0,-6 L -6,-6 A 6,6 0 0,0 -6,6 L 0,6 Z" fill={C.red} />
-    </g>
-
-    <text x="844" y="314" fontFamily={F.body} fontSize="14" fontWeight="500" fill={C.text}>candidate drug</text>
-    <text x="844" y="328" fontFamily={F.mono} fontSize="9"  fill={C.textFaint}>perturbation toward target</text>
-  </svg>
-);
-
-// ── TechCard ──────────────────────────────────────────────────────────────────
-
-function TechCard({ tech, index, onClick }) {
-  const [hovered, setHovered] = React.useState(false);
-
-  return (
-    <div
-      onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        backgroundColor: C.surface,
-        border:          `1px solid ${hovered ? C.borderHover : C.border}`,
-        borderRadius:    '10px',
-        padding:         '24px 28px 28px',
-        cursor:          'pointer',
-        transition:      'border-color 0.2s ease, box-shadow 0.2s ease',
-        boxShadow:       hovered ? '0 8px 32px rgba(0,0,0,0.05)' : 'none',
-        position:        'relative',
-        minHeight:       '200px',
-        display:         'flex',
-        flexDirection:   'column',
-      }}
-    >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '18px' }}>
-        <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.62rem', color: C.textFaint, letterSpacing: '0.04em', margin: 0 }}>
-          {String(index).padStart(2, '0')}
-        </p>
-        <span style={{
-          fontFamily: F.body,
-          fontSize:   '0.9rem',
-          color:      hovered ? C.red : C.textFaint,
-          opacity:    hovered ? 1 : 0,
-          transform:  hovered ? 'translate(0,0)' : 'translate(4px,-4px)',
-          transition: 'all 0.2s ease',
-        }}>
-          →
-        </span>
-      </div>
-      <h3 style={{ fontFamily: F.body, fontWeight: 400, fontSize: '0.92rem', color: C.text, margin: '0 0 8px', letterSpacing: '-0.01em' }}>
-        {tech.title}
-      </h3>
-      <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.8rem', color: C.textSub, lineHeight: 1.65, margin: 0 }}>
-        {tech.description}
-      </p>
-    </div>
-  );
-}
-
-// ── PublicationItem ───────────────────────────────────────────────────────────
-
-function PublicationItem({ pub }) {
-  const [hovered, setHovered] = React.useState(false);
-
-  const inner = (
-      <div className="pub-grid" style={{
-        display:             'grid',
-        gridTemplateColumns: '110px 1fr 28px',
-        gap:                 '24px',
-        alignItems:          'flex-start',
-        padding:             '22px 0',
-        borderTop:           `1px solid ${C.border}`,
-      }}>
-      <p style={{ fontFamily: F.body, fontWeight: 500, fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: hovered ? C.red : C.textFaint, margin: 0, paddingTop: '2px', transition: 'color 0.18s' }}>
-        {pub.shortVenue || pub.venue} {pub.year}
-      </p>
-      <div>
-        <p style={{ fontFamily: F.body, fontWeight: 400, fontSize: '0.88rem', color: hovered ? C.red : C.text, lineHeight: 1.55, margin: '0 0 6px', transition: 'color 0.18s' }}>
-          {pub.title}
-        </p>
-        <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.75rem', color: C.textFaint, margin: 0 }}>
-          {pub.authors}
-        </p>
-      </div>
-      <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: '2px', color: hovered ? C.red : C.textFaint, fontSize: '0.9rem', transition: 'color 0.18s' }}>
-        ↗
-      </span>
-    </div>
-  );
-
-  if (pub.url) {
-    return (
-      <a
-        href={pub.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{ textDecoration: 'none', display: 'block' }}
-      >
-        {inner}
-      </a>
-    );
+const PRODUCTS = {
+  pertflow: {
+    product: 'PertFlow',
+    title: 'Multi-Modal Perturbation',
+    description: 'A framework for predicting joint perturbed transcriptome and morphology states from an initial cell state and a drug.',
+    url: 'https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1',
+    figures: [
+      { slot: 'pertflow_main.png', caption: 'Mapping from control RNA-seq and image to treatment RNA-seq and image with drug conditioning. Generated treatment images are compared against real treatment images with drug name and concentration.' },
+      { slot: 'pertflow_arch.png', caption: 'RNA-seq and image pass through their respective encoders, then a shared encoder conditioned by the drug encoder; output heads decode perturbed transcriptome and morphology.' },
+      { slot: 'pertflow_results.png', caption: 'Generated vs. real treatment for Aortic Smooth Muscle, A549, and Dermal Fibroblast cells.' }
+    ]
+  },
+  pert2mol: {
+    product: 'Pert2Mol',
+    title: 'Drug Design',
+    description: 'A framework for multi-modal phenotype-to-structure generation — from an observed cellular response back to the molecule that caused it.',
+    url: 'https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1',
+    figures: [
+      { slot: 'pert2mol_main.png', caption: 'Transcriptomic and morphological features are extracted by their respective encoders; a transformer generates the SMILES string of the drug that caused the perturbation.' },
+      { slot: 'pert2mol_mols.png', caption: 'Accurate SMILES generation across drugs with different mechanisms of action, benchmarked against a diffusion baseline and RNA-only / image-only variants.' }
+    ]
+  },
+  annotate: {
+    product: 'AnnotateAnyCell',
+    title: 'Digital Pathology',
+    description: 'An open-source framework for cell-level annotation and analysis in digital pathology.',
+    url: 'https://www.biorxiv.org/content/10.1101/2025.11.02.686114v3',
+    figures: [
+      { slot: 'annotate_arch.png', caption: 'The complete pipeline, from image pre-processing to the output interface.' },
+      { slot: 'annotate_main.png', caption: 'Visualizing and interacting with histopathology samples at cellular resolution; navigate image and embedding space to explore regions of interest and label cells.' },
+      { slot: 'annotate_output.png', caption: 'Annotated outputs give labeled cell-level classes and analysis for direct download, surfacing tissue composition and cellular relationships.' }
+    ]
+  },
+  geneflow: {
+    product: 'GeneFlow',
+    title: 'Cellular Translation',
+    description: 'A framework mapping transcriptomics onto paired cellular H&E images via rectified flow.',
+    url: 'https://arxiv.org/abs/2511.00119',
+    figures: [
+      { slot: 'geneflow_main.png', caption: 'Generating realistic cellular morphology features from transcriptomic data, visualizing spatially resolved intercellular interactions from expression profiles.' },
+      { slot: 'geneflow_arch.png', caption: 'Architecture for mapping transcriptomes to histology images; rectified flow dynamics consistently outperform alternatives.' },
+      { slot: 'geneflow_diagnosis.png', caption: 'Diagnostic features — pleomorphic nuclei, keratinizing squamous epithelium, collagenous stroma — enabling consistent interpretation relative to ground truth.' }
+    ]
   }
+};
 
-  return inner;
-}
+export default function App({ showDevelopment = true }) {
+  const [detailKey, setDetailKey] = useState(null);
+  const [contactOpen, setContactOpen] = useState(false);
+  const [status, setStatus] = useState('');
 
-// ── ContactModal ──────────────────────────────────────────────────────────────
+  const detail = detailKey ? PRODUCTS[detailKey] : null;
 
-function ContactModal({ isOpen, onClose }) {
-  const [formData, setFormData] = React.useState({ name: '', affiliation: '', email: '', message: '' });
-  const [status, setStatus]     = React.useState('');
+  const setDetail = (key) => {
+    setDetailKey(key);
+    document.body.style.overflow = key ? 'hidden' : '';
+  };
+  const closeDetail = () => setDetail(null);
+  const maybeCloseDetail = (e) => { if (e.target === e.currentTarget) closeDetail(); };
+  const open = {
+    pertflow: () => setDetail('pertflow'),
+    pert2mol: () => setDetail('pert2mol'),
+    annotate: () => setDetail('annotate'),
+    geneflow: () => setDetail('geneflow'),
+  };
 
-  const handleSubmit = async (e) => {
+  const openContact = () => setContactOpen(true);
+  const closeContact = () => { setContactOpen(false); setStatus(''); };
+  const maybeCloseContact = (e) => { if (e.target === e.currentTarget) closeContact(); };
+
+  const submit = async (e) => {
     e.preventDefault();
+    const f = new FormData(e.target);
     setStatus('sending');
     try {
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method:  'POST',
+      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
-          service_id:      'service_j3yowha',
-          template_id:     'template_04fa5oe',
-          user_id:         'svCaDQSXgOe7BSIrP',
+        body: JSON.stringify({
+          service_id: 'service_j3yowha',
+          template_id: 'template_04fa5oe',
+          user_id: 'svCaDQSXgOe7BSIrP',
           template_params: {
-            to_email:    'verma198@purdue.edu',
-            from_name:   formData.name,
-            from_email:  formData.email,
-            affiliation: formData.affiliation,
-            message:     formData.message,
+            to_email: 'verma198@purdue.edu',
+            from_name: f.get('name'),
+            from_email: f.get('email'),
+            affiliation: f.get('affiliation'),
+            message: f.get('message'),
           },
         }),
       });
-      if (response.ok) {
-        setStatus('success');
-        setFormData({ name: '', affiliation: '', email: '', message: '' });
-        setTimeout(() => { onClose(); setStatus(''); }, 2000);
-      } else {
-        setStatus('error');
-      }
+      if (!res.ok) throw new Error('send failed');
+      setStatus('success');
+      setTimeout(closeContact, 1600);
     } catch {
       setStatus('error');
     }
   };
 
-  if (!isOpen) return null;
-
-  const inputStyle = {
-    width:           '100%',
-    padding:         '10px 14px',
-    backgroundColor: C.bg,
-    border:          `1px solid ${C.border}`,
-    borderRadius:    '8px',
-    color:           C.text,
-    fontFamily:      F.body,
-    fontWeight:      300,
-    fontSize:        '0.9rem',
-    outline:         'none',
-    boxSizing:       'border-box',
-    transition:      'border-color 0.18s',
-  };
-
-  const labelStyle = {
-    display:       'block',
-    fontFamily:    F.body,
-    fontWeight:    500,
-    fontSize:      '0.68rem',
-    letterSpacing: '0.09em',
-    textTransform: 'uppercase',
-    color:         C.textSub,
-    marginBottom:  '7px',
-  };
-
-  return (
-    <div
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-      style={{ backgroundColor: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(6px)', position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}
-    >
-      <div style={{ backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: '16px', maxWidth: '580px', width: '100%', padding: '44px', position: 'relative', boxShadow: '0 24px 80px rgba(0,0,0,0.1)' }}>
-        <button
-          onClick={onClose}
-          onMouseEnter={e => e.currentTarget.style.color = C.text}
-          onMouseLeave={e => e.currentTarget.style.color = C.textFaint}
-          style={{ position: 'absolute', top: '18px', right: '22px', fontFamily: F.body, fontSize: '1.3rem', color: C.textFaint, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1, transition: 'color 0.18s' }}
-        >
-          ×
-        </button>
-        <h2 style={{ fontFamily: F.body, fontWeight: 200, fontSize: '1.8rem', color: C.text, letterSpacing: '-0.02em', marginBottom: '4px' }}>
-          Contact Us
-        </h2>
-        <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.88rem', color: C.textSub, marginBottom: '32px' }}>
-          Demo · Collaboration · Chat
-        </p>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          {[
-            { key: 'name',        label: 'Name',        type: 'text'  },
-            { key: 'affiliation', label: 'Affiliation', type: 'text'  },
-            { key: 'email',       label: 'Email',       type: 'email' },
-          ].map(({ key, label, type }) => (
-            <div key={key}>
-              <label style={labelStyle}>{label}</label>
-              <input
-                type={type}
-                required
-                value={formData[key]}
-                onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
-                style={inputStyle}
-              />
-            </div>
-          ))}
-          <div>
-            <label style={labelStyle}>Message</label>
-            <textarea
-              required
-              rows={4}
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              style={{ ...inputStyle, resize: 'vertical' }}
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={status === 'sending'}
-            style={{
-              backgroundColor: status === 'success' ? '#2a5c3a' : C.text,
-              color:           '#ffffff',
-              fontFamily:      F.body,
-              fontWeight:      500,
-              fontSize:        '0.75rem',
-              letterSpacing:   '0.09em',
-              textTransform:   'uppercase',
-              padding:         '13px',
-              borderRadius:    '8px',
-              border:          'none',
-              cursor:          status === 'sending' ? 'not-allowed' : 'pointer',
-              transition:      'background-color 0.18s',
-              opacity:         status === 'sending' ? 0.5 : 1,
-            }}
-          >
-            {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent' : 'Send Message'}
-          </button>
-          {status === 'error' && (
-            <p style={{ fontFamily: F.body, fontSize: '0.82rem', color: C.red, textAlign: 'center' }}>
-              Failed to send. Please try again.
-            </p>
-          )}
-        </form>
-      </div>
-    </div>
-  );
-}
-
-// ── Header ────────────────────────────────────────────────────────────────────
-
-function Header() {
-  const [contactOpen, setContactOpen] = React.useState(false);
-  const [scrolled, setScrolled]       = React.useState(false);
-
-  React.useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 24);
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
-  }, []);
+  const submitLabel = status === 'sending' ? 'Sending…' : status === 'success' ? 'Sent' : 'Send message';
 
   return (
     <>
-      <nav style={{
-        position:        'fixed',
-        top:             0,
-        width:           '100%',
-        zIndex:          50,
-        backgroundColor: scrolled ? 'rgba(239,238,231,0.88)' : 'transparent',
-        borderBottom:    `1px solid ${scrolled ? C.border : 'transparent'}`,
-        backdropFilter:  scrolled ? 'blur(12px)' : 'none',
-        transition:      'all 0.25s ease',
-      }}>
-        <div className="nav-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '18px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Link to="/" style={{ fontFamily: F.body, fontWeight: 300, fontSize: '1.05rem', color: C.text, textDecoration: 'none', letterSpacing: '0.04em' }}>
-            baiom labs
-          </Link>
-          <button
-            onClick={() => setContactOpen(true)}
-            onMouseEnter={e => e.currentTarget.style.color = C.text}
-            onMouseLeave={e => e.currentTarget.style.color = C.textSub}
-            style={{ fontFamily: F.body, fontWeight: 400, fontSize: '0.75rem', letterSpacing: '0.09em', textTransform: 'uppercase', color: C.textSub, background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.18s' }}
-          >
-            contact
-          </button>
-        </div>
-      </nav>
-      <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
-    </>
-  );
-}
-
-// ── Footer ────────────────────────────────────────────────────────────────────
-
-function Footer() {
-  return (
-    <footer style={{ borderTop: `1px solid ${C.border}`, padding: '28px 40px' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-        <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.72rem', color: C.textFaint }}>
-          &copy; 2026 baiom labs
-        </p>
-      </div>
-    </footer>
-  );
-}
-
-// ── Home ──────────────────────────────────────────────────────────────────────
-
-function Home() {
-  const navigate                      = useNavigate();
-  const [contactOpen, setContactOpen] = React.useState(false);
-
-  const publications = [
-    { title: "Joint Modeling of Transcriptomic and Morphological Phenotypes for Generative Molecular Design",          authors: "M Wang, S Verma et al.", shortVenue: "ISMB",    year: "2026", url: "https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1"    },
-    { title: "Generating Joint Transcriptomic and Morphological Responses to Drug Perturbations via Rectified Flow",   authors: "S Verma, M Wang et al.", shortVenue: "ISMB",    year: "2026", url: "https://www.biorxiv.org/content/10.64898/2026.02.02.703189v3"    },
-    { title: "AnnotateAnyCell: Open-Source AI Framework for Efficient Annotation in Digital Pathology",                authors: "S Verma, A Malusare et al.", shortVenue: "bioRxiv", year: "2025", url: "https://www.biorxiv.org/content/10.1101/2025.11.02.686114v3" },
-    { title: "GeneFlow: Translation of Single-cell Gene Expression to Histopathological Images via Rectified Flow",    authors: "M Wang, S Verma et al.", shortVenue: "NeurIPS", year: "2025", url: "https://arxiv.org/abs/2511.00119"                                  },
-  ];
-
-  const technologies = [
-    { title: "Multi-Modal Perturbation", description: "Predicting Multi-Modal Molecular Perturbations",    route: "/multi-modal-pert"     },
-    { title: "Drug Design",              description: "Multi-modal Generative Modeling of Molecules.",     route: "/drug-design"          },
-    { title: "Digital Pathology",        description: "Cell-level Annotation and Analysis Framework",      route: "/digital-pathology"    },
-    { title: "Cellular Translation",     description: "Translating Modalities for Cross-Domain Insights",  route: "/cellular-translation" },
-    { title: "Single-Cell Perturbation", description: "Single-Cell Functional Response to Perturbations", route: "/single-cell-pert"     },
-    { title: "3D Medical Imaging",       description: "Aligning Tomographic Medical Volumes",              route: "/medical-imaging"      },
-  ];
-
-  const platformLinks = [
-    { label: 'Read the GeneFlow Paper (NeurIPS \'25)', url: 'https://arxiv.org/abs/2511.00119'                             },
-    { label: 'Read the PertFlow Paper (ISMB \'26)',    url: 'https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1' },
-    { label: 'Read the Pert2Mol Paper (ISMB \'26)',    url: 'https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1' },
-  ];
-
-  const sectionLabelStyle = { fontFamily: F.body, fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: C.red, margin: '0 0 14px', paddingTop: '6px' };
-  const sectionHeadingStyle = { fontFamily: F.body, fontWeight: 200, fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', color: C.text, letterSpacing: '-0.025em', lineHeight: 1.1, margin: '0 0 40px' };
-  const twoColSection       = { maxWidth: '1200px', margin: '0 auto', padding: '80px 40px', display: 'grid', gridTemplateColumns: '200px 1fr', gap: '60px', alignItems: 'start' };
-
-  return (
-    <div style={{ backgroundColor: C.bg, minHeight: '100vh' }}>
-      <Header />
-      <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
-
-      {/* ── Landing ───────────────────────────────────────────── */}
-      <section style={{ paddingTop: '120px', paddingBottom: '20px' }}>
-        <div className="section-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
-
-          {/* Name */}
-          <h1 className="fade-up" style={{
-            fontFamily:    F.body,
-            fontWeight:    300,
-            fontSize:      'clamp(2.8rem, 6vw, 5rem)',
-            color:         C.text,
-            letterSpacing: '-0.03em',
-            lineHeight:    1.06,
-            margin:        '0 0 14px',
-          }}>
-            baiom labs
-          </h1>
-
-          {/* Subtitle */}
-          <p className="fade-up" style={{
-            fontFamily:    F.body,
-            fontWeight:    500,
-            fontSize:      '0.9rem',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color:         C.red,
-            margin:        '0 0 52px',
-          }}>
-            Multi-Modal Virtual Cell World Models
-          </p>
-
-          {/* Diagram */}
-          <div className="fade-up-1" style={{
-            background: 'transparent',
-            border:          `0px solid ${C.border}`,
-            borderRadius:    '12px',
-            padding:         '32px 28px 26px',
-            marginBottom:    '28px',
-          }}>
-            <SystemDiagram />
-          </div>
-
-          {/* Blurb + paper links */}
-          <div className="fade-up-2 responsive-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '44px' }}>
-            <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.88rem', color: C.textSub, lineHeight: 1.9, margin: 0 }}>
-              We develop multi-modal models on human cellular and molecular data to learn the patterns governing drug response, toxicity, and cross-modal cellular translation
-            </p>
-            <div>
-              {platformLinks.map(link => (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display:        'flex',
-                    justifyContent: 'space-between',
-                    alignItems:     'center',
-                    fontFamily:     F.body,
-                    fontWeight:     300,
-                    fontSize:       '0.78rem',
-                    color:          C.textSub,
-                    textDecoration: 'none',
-                    padding:        '5px 0',
-                    borderBottom:   `1px solid ${C.border}`,
-                  }}
-                >
-                  <span>{link.label}</span>
-                  <span style={{ color: C.textFaint }}>↗</span>
-                </a>
-              ))}
+      <div style={s("background: #efeee7; min-height: 100vh; font-family: Urbanist, sans-serif; color: #111113; -webkit-font-smoothing: antialiased;")}>
+      
+        <nav style={s("position: sticky; top: 0; z-index: 40; background: rgba(239,238,231,0.82); backdrop-filter: blur(14px); border-bottom: 1px solid #e2ded5;")}>
+          <div style={s("max-width: 1240px; margin: 0 auto; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px;")}>
+            <div style={s("display: flex; align-items: baseline; gap: 12px;")}>
+              <span style={s("font-size: 17px; font-weight: 500; letter-spacing: -0.01em;")}>baiom labs</span>
+              
+            </div>
+            <div style={s("display: flex; align-items: center; gap: 28px;")}>
+              <a className="x1" href="#products" style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #64646e; text-decoration: none;")}>Products</a>
+              <a className="x1" href="#publications" style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #64646e; text-decoration: none;")}>Papers</a>
+              <button className="x2" onClick={openContact} style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #faf9f5; background: #111113; border: none; border-radius: 999px; padding: 9px 18px; cursor: pointer; transition: background 0.18s;")}>Contact</button>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── Products ──────────────────────────────────────────── */}
-      <section style={{ borderTop: `1px solid ${C.border}`, paddingBottom: '20px' }}>
-        <div className="responsive-section" style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
-          <p style={sectionLabelStyle}>Products</p>
-          <h2 style={sectionHeadingStyle}>Biological Applications</h2>
-          <div className="responsive-3col" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-            {technologies.map((tech, i) => (
-              <TechCard key={i} tech={tech} index={i + 1} onClick={() => navigate(tech.route)} />
-            ))}
+        </nav>
+      
+        <section style={s("max-width: 1240px; margin: 0 auto; padding: 104px 40px 0; animation: fu 0.7s cubic-bezier(0.16,1,0.3,1) both;")}>
+          <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; letter-spacing: 0.18em; text-transform: uppercase; color: #c04832; margin: 0 0 28px")}>Multi-modal virtual cell world models</p>
+          
+          <h1 style={s("font-size: clamp(1.6rem, 4.4vw, 3.4rem); font-weight: 200; letter-spacing: -0.035em; line-height: 1.04; margin: 0; max-width: 20ch; text-wrap: balance; width: 839px; height: 158px")}>Predicting cell response, before the experiment.</h1><div style={s("display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 64px; align-items: end; margin-top: 44px; padding-bottom: 64px;")}>
+            <p style={s("font-size: 1.4rem; font-weight: 300; line-height: 1.85; color: #64646e; margin: 0; max-width: 46ch")}>We develop models on cellular and molecular data to learn the patterns governing perturbation response.</p>
+            <div style={s("display: flex; flex-direction: column;")}>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: #a3a29b; margin: 0 0 6px")}>Latest work</p>
+              <a className="x3" href="https://arxiv.org/abs/2511.00119" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5")}><span>GeneFlow — NeurIPS '25</span><span style={s("color: #a3a29b;")}>↗</span></a>
+              <a className="x3" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5")}><span>PertFlow — ISMB '26</span><span style={s("color: #a3a29b;")}>↗</span></a>
+              <a className="x3" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5; border-bottom: 1px solid #e2ded5")}><span>Pert2Mol — ISMB '26</span><span style={s("color: #a3a29b;")}>↗</span></a>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── Publications ──────────────────────────────────────── */}
-      <section style={{ borderTop: `1px solid ${C.border}`, paddingBottom: '20px' }}>
-        <div className="responsive-section" style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
-          <p style={sectionLabelStyle}>Publications</p>
-          <h2 style={sectionHeadingStyle}>Peer-Reviewed &amp; Open-Source</h2>
-          <div style={{ borderBottom: `1px solid ${C.border}` }}>
-            {publications.map((pub, i) => (
-              <PublicationItem key={i} pub={pub} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
-
-// ── DetailPage ────────────────────────────────────────────────────────────────
-
-function DetailPage({ title, productName, productAccent, description, sections }) {
-  return (
-    <div style={{ backgroundColor: C.bg, minHeight: '100vh' }}>
-      <Header />
-      <section style={{ paddingTop: '110px', paddingBottom: '96px', paddingLeft: '40px', paddingRight: '40px' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <p style={{ fontFamily: F.body, fontWeight: 500, fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: C.textFaint, marginBottom: '14px' }}>
-            Research
-          </p>
-          <h1 style={{ fontFamily: F.body, fontWeight: 200, fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: C.text, letterSpacing: '-0.025em', marginBottom: '14px', lineHeight: 1.15 }}>
-            {title}
-          </h1>
-          <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '1rem', color: C.textSub, lineHeight: 1.75, marginBottom: '64px' }}>
-            <span style={{ fontWeight: 500, color: productAccent }}>{productName}</span>
-            {' — '}{description}
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '64px' }}>
-            {sections.map((section, i) => (
-              <div key={i}>
-                <img
-                  src={section.image}
-                  alt={section.alt}
-                  style={{ width: '100%', borderRadius: section.rounded ? '14px' : '8px', border: `1px solid ${C.border}`, marginBottom: '16px', boxShadow: '0 4px 24px rgba(0,0,0,0.06)', padding: '10px', backgroundColor: C.surface }}
-                />
-                <p style={{ fontFamily: F.body, fontWeight: 300, fontSize: '0.86rem', color: C.textSub, lineHeight: 1.75 }}>
-                  {section.captions.map((line, j) => (
-                    <React.Fragment key={j}>
-                      {j > 0 && <br />}
-                      {line}
-                    </React.Fragment>
-                  ))}
-                </p>
+        </section>
+      
+        <section style={s("border-top: 1px solid #e2ded5; background: linear-gradient(#f4f3ed, #efeee7);")}>
+          <div style={s("max-width: 1240px; margin: 0 auto; padding: 56px 40px 64px;")}>
+            <div style={s("display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 40px;")}>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: #a3a29b; margin: 0")}>The model</p>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0")}>VirSCell-1</p>
+            </div>
+      
+            <div style={s("display: grid; grid-template-columns: minmax(0,1fr) 96px minmax(0,0.72fr) 96px minmax(0,1fr); align-items: center; gap: 0;")}>
+      
+              <div style={s("display: flex; flex-direction: column; gap: 12px;")}>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #a3a29b; margin: 0 0 2px")}>Inputs</p>
+                <div style={s("background: #fdfdfa; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e; margin: 0 0 18px")}>Initial cell state</p>
+                  <div style={s("display: flex; flex-direction: column; gap: 16px;")}>
+                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
+                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><circle cx="13" cy="13" r="10.5" fill="none" stroke="#111113" strokeWidth="1.2"></circle><circle cx="13" cy="13" r="3.4" fill="#64646e"></circle></svg>
+                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>cell images</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>cell morphology</p></div>
+                    </div>
+                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
+                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#111113"><rect x="1" y="6" width="7" height="7" opacity="0.8"></rect><rect x="9.5" y="6" width="7" height="7" opacity="0.32"></rect><rect x="18" y="6" width="7" height="7" opacity="0.6"></rect><rect x="1" y="14.5" width="7" height="7" opacity="0.42"></rect><rect x="9.5" y="14.5" width="7" height="7" opacity="0.72"></rect><rect x="18" y="14.5" width="7" height="7" opacity="0.28"></rect></g></svg>
+                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>gene expression</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression profile</p></div>
+                    </div>
+                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
+                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#111113"><circle cx="4" cy="4" r="2.6" opacity="0.85"></circle><circle cx="13" cy="4" r="2.6" opacity="0.35"></circle><circle cx="22" cy="4" r="2.6" opacity="0.65"></circle><circle cx="4" cy="13" r="2.6" opacity="0.5"></circle><circle cx="13" cy="13" r="2.6" opacity="0.9"></circle><circle cx="22" cy="13" r="2.6" opacity="0.25"></circle><circle cx="4" cy="22" r="2.6" opacity="0.6"></circle><circle cx="13" cy="22" r="2.6" opacity="0.8"></circle><circle cx="22" cy="22" r="2.6" opacity="0.45"></circle></g></svg>
+                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>spatial transcriptomics</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression map</p></div>
+                    </div>
+                  </div>
+                </div>
+                <div style={s("background: #fdfdfa; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e; margin: 0 0 14px;")}>Perturbation type</p>
+                  <div style={s("display: flex; flex-wrap: wrap; gap: 8px;")}>
+                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1px solid #e2ded5; border-radius: 999px; background: #efeee7;")}>Drug</span>
+                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1px solid #e2ded5; border-radius: 999px; background: #efeee7;")}>Genetic</span>
+                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1px solid #e2ded5; border-radius: 999px; background: #efeee7;")}>Cytokine</span>
+                  </div>
+                </div>
               </div>
-            ))}
+      
+              <div style={s("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 120px; padding: 80px 8px 0;")}>
+                <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Encode</p>
+                  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
+                </div>
+                <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Condition</p>
+                  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
+                </div>
+              </div>
+      
+              <div style={s("background: #fdfdfa; border: 1px solid #d4cfc3; border-radius: 18px; padding: 26px 22px; margin-top: 80px; box-shadow: 0 14px 44px rgba(17,17,19,0.06);")}>
+                <p style={s("font-size: 1.02rem; font-weight: 500; color: #c04832; text-align: center; margin: 0;")}>VirSCell-1</p>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #a3a29b; text-align: center; margin: 6px 0 22px;")}>Virtual Cell World Model</p>
+                <svg viewBox="0 0 140 96" width="100%" style={s("display: block; height: auto;")}>
+                  <g stroke="#c04832" strokeWidth="1.1" opacity="0.3"><path d="M22,12 L118,12"></path><path d="M22,36 L118,36"></path><path d="M22,60 L118,60"></path><path d="M22,84 L118,84"></path></g>
+                  <g stroke="#a3a29b" strokeWidth="0.9" opacity="0.5"><path d="M22,12 L118,84"></path><path d="M22,84 L118,12"></path><path d="M22,36 L118,60"></path><path d="M22,60 L118,36"></path></g>
+                  <g fill="#111113"><circle cx="22" cy="12" r="3"></circle><circle cx="22" cy="36" r="3"></circle><circle cx="22" cy="60" r="3"></circle><circle cx="22" cy="84" r="3"></circle><circle cx="118" cy="12" r="3"></circle><circle cx="118" cy="36" r="3"></circle><circle cx="118" cy="60" r="3"></circle><circle cx="118" cy="84" r="3"></circle></g>
+                </svg>
+              </div>
+      
+              <div style={s("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 120px; padding: 80px 8px 0;")}>
+                <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Predict</p>
+                  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
+                </div>
+                <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Design</p>
+                  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
+                </div>
+              </div>
+      
+              <div style={s("display: flex; flex-direction: column; gap: 12px;")}>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #a3a29b; margin: 0 0 2px; text-align: right")}>Outputs</p>
+                <div style={s("background: #fdfdfa; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 18px")}>Perturbed cell state</p>
+                  <div style={s("display: flex; flex-direction: column; gap: 16px;")}>
+                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
+                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><circle cx="13" cy="13" r="10.5" fill="none" stroke="#111113" strokeWidth="1.2"></circle><circle cx="15" cy="14.6" r="3.4" fill="#c04832"></circle></svg>
+                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>cell images</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>cell morphology</p></div>
+                    </div>
+                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
+                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#c04832"><rect x="1" y="6" width="7" height="7" opacity="0.35"></rect><rect x="9.5" y="6" width="7" height="7" opacity="0.8"></rect><rect x="18" y="6" width="7" height="7" opacity="0.28"></rect><rect x="1" y="14.5" width="7" height="7" opacity="0.72"></rect><rect x="9.5" y="14.5" width="7" height="7" opacity="0.4"></rect><rect x="18" y="14.5" width="7" height="7" opacity="0.62"></rect></g></svg>
+                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>gene expression</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression profile</p></div>
+                    </div>
+                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
+                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#c04832"><circle cx="4" cy="4" r="2.6" opacity="0.5"></circle><circle cx="13" cy="4" r="2.6" opacity="0.85"></circle><circle cx="22" cy="4" r="2.6" opacity="0.3"></circle><circle cx="4" cy="13" r="2.6" opacity="0.9"></circle><circle cx="13" cy="13" r="2.6" opacity="0.45"></circle><circle cx="22" cy="13" r="2.6" opacity="0.7"></circle><circle cx="4" cy="22" r="2.6" opacity="0.35"></circle><circle cx="13" cy="22" r="2.6" opacity="0.6"></circle><circle cx="22" cy="22" r="2.6" opacity="0.8"></circle></g></svg>
+                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>spatial transcriptomics</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression map</p></div>
+                    </div>
+                  </div>
+                </div>
+                <div style={s("background: #fdfdfa; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 14px;")}>Inverse drug design</p>
+                  <div style={s("display: flex; align-items: center; gap: 14px;")}>
+                    <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g transform="translate(13 13) rotate(-45)"><rect x="-11" y="-5.5" width="22" height="11" rx="5.5" fill="none" stroke="#c04832" strokeWidth="1.4"></rect><path d="M0,-5.5 L-5.5,-5.5 A5.5,5.5 0 0,0 -5.5,5.5 L0,5.5 Z" fill="#c04832"></path></g></svg>
+                    <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>candidate drug</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>perturbation toward target</p></div>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
           </div>
-        </div>
-      </section>
-      <Footer />
-    </div>
-  );
-}
-
-// ── Detail route components ───────────────────────────────────────────────────
-
-function PerturbationModeling() {
-  return (
-    <DetailPage
-      title="Perturbation Modeling"
-      productName="PertFlow"
-      productAccent={C.red}
-      description="a framework for predicting joint perturbed transcriptome and morphology states."
-      sections={[
-        { image: '/pertflow_main.png',    alt: 'PertFlow Main',    captions: ['Mapping from control RNA-seq and image to treatment RNA-seq and image with drug conditioning.', 'Comparison of generated treatment vs real treatment images with drug name and concentration.'] },
-        { image: '/pertflow_arch.png',    alt: 'PertFlow Arch',    captions: ['Input RNA-seq and image going through their respective encoders.', 'Pass through shared encoder along with conditioning from drug encoder.', 'Output heads decode perturbed transcriptome and morphology respectively.'] },
-        { image: '/pertflow_results.png', alt: 'PertFlow Results', captions: ['Generated vs real treatment for Aortic Smooth Muscle, A549, and Dermal Fibroblast Cells.'] },
-      ]}
-    />
-  );
-}
-
-function DrugDesign() {
-  return (
-    <DetailPage
-      title="Drug Design"
-      productName="Pert2Mol"
-      productAccent={C.amber}
-      description="a framework for multi-modal phenotype-to-structure generation."
-      sections={[
-        { image: '/pert2mol_main.png', alt: 'Pert2Mol Main', captions: ['Transcriptome and Morphological features are extracted from their respective encoders.', 'A transformer learns to generate SMILES string of the drug that caused the perturbation.'] },
-        { image: '/pert2mol_mols.png', alt: 'Pert2Mol Mols', captions: ['Results show accurate SMILES generation for a variety of drugs with different mechanisms of action.', 'Pert2Mol is compared against a diffusion baseline along with RNA-only and image-only model variants.'] },
-      ]}
-    />
-  );
-}
-
-function DigitalPathology() {
-  return (
-    <DetailPage
-      title="Digital Pathology"
-      productName="AnnotateAnyCell"
-      productAccent={C.purple}
-      description="a framework for cell-level annotation and analysis in digital pathology."
-      sections={[
-        { image: '/annotate_arch.png',   alt: 'AnnotateAnyCell Arch',                captions: ["AnnotateAnyCell framework's complete pipeline from image pre-processing to output interface."] },
-        { image: '/annotate_main.png',   alt: 'AnnotateAnyCell Main',   rounded: true, captions: ['Intuitive platform for visualizing and interacting with histopathology samples at cellular resolution.', 'Users can navigate through image and embedding space to explore regions of interest and label cells.'] },
-        { image: '/annotate_output.png', alt: 'AnnotateAnyCell Output', rounded: true, captions: ['Annotated outputs demonstrate labeled cell-level classes and analysis for direct download.', 'Users can understand tissue composition and cellular relationships to visualize their labels.'] },
-      ]}
-    />
-  );
-}
-
-function TranslationModels() {
-  return (
-    <DetailPage
-      title="Translation Models"
-      productName="GeneFlow"
-      productAccent={C.teal}
-      description="a framework to map transcriptomics onto paired cellular H&E images."
-      sections={[
-        { image: '/geneflow_main.png',      alt: 'GeneFlow Main',      captions: ['Enables generation of realistic cellular morphology features from transcriptomic data.', 'Visualizing spatially resolved intercellular interactions from gene expression profiles.'] },
-        { image: '/geneflow_arch.png',      alt: 'GeneFlow Arch',      captions: ['Architecture of the GeneFlow model for mapping transcriptomes to histology images.', 'Leveraging rectified flow dynamics, the method consistently outperforms alternatives.'] },
-        { image: '/geneflow_diagnosis.png', alt: 'GeneFlow Diagnosis', captions: ['Generate diagnostic features: pleomorphic nuclei, keratinizing squamous epithelium, collagenous stroma.', 'Enabling pathologists to reach consistent interpretations with high confidence relative to ground truth.'] },
-      ]}
-    />
-  );
-}
-
-const ComingSoon = () => (
-  <div style={{ backgroundColor: C.bg, minHeight: '100vh' }}>
-    <Header />
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <h2 style={{ fontFamily: F.body, fontWeight: 200, fontSize: 'clamp(2rem, 6vw, 4.5rem)', color: C.text, letterSpacing: '-0.03em' }}>
-        Coming Soon
-      </h2>
-    </div>
-    <Footer />
-  </div>
-);
-
-// ── App ───────────────────────────────────────────────────────────────────────
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/"                     element={<Home />}                 />
-        <Route path="/multi-modal-pert"     element={<PerturbationModeling />} />
-        <Route path="/drug-design"          element={<DrugDesign />}           />
-        <Route path="/digital-pathology"    element={<DigitalPathology />}     />
-        <Route path="/cellular-translation" element={<TranslationModels />}    />
-        <Route path="/single-cell-pert"     element={<ComingSoon />}           />
-        <Route path="/medical-imaging"      element={<ComingSoon />}           />
-      </Routes>
-    </BrowserRouter>
+        </section>
+      
+        <section id="products" style={s("border-top: 1px solid #e2ded5;")}>
+          <div style={s("max-width: 1240px; margin: 0 auto; padding: 88px 40px;")}>
+            <div>
+                <h2 style={s("font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 200; letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 36px;")}>Biological applications</h2>
+                <div style={s("display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1px; background: #e2ded5; border: 1px solid #e2ded5; border-radius: 14px; overflow: hidden;")}>
+                  <button className="x4" onClick={open.pertflow} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #c04832;")}>01 / PertFlow</span>
+                    <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Multi-Modal Perturbation</span>
+                    <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Predicting multi-modal molecular perturbations.</span>
+                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
+                  </button>
+                  <button className="x4" onClick={open.pert2mol} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #a87428;")}>02 / Pert2Mol</span>
+                    <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Drug Design</span>
+                    <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Multi-modal generative modeling of molecules.</span>
+                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
+                  </button>
+                  <button className="x4" onClick={open.annotate} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #6e4ea8;")}>03 / AnnotateAnyCell</span>
+                    <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Digital Pathology</span>
+                    <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Cell-level annotation and analysis framework.</span>
+                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
+                  </button>
+                  <button className="x4" onClick={open.geneflow} style={s("text-align: left; background: #faf9f5; border: none; cursor: pointer; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px; font-family: Urbanist, sans-serif; transition: background 0.2s;")}>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #2a8ca4;")}>04 / GeneFlow</span>
+                    <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #111113;")}>Cellular Translation</span>
+                    <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #64646e;")}>Translating modalities for cross-domain insights.</span>
+                    <span style={s("margin-top: auto; font-size: 0.82rem; color: #a3a29b;")}>→</span>
+                  </button>
+                  {showDevelopment && (<>
+                    <div style={s("background: #f4f3ed; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px;")}>
+                      <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #a3a29b;")}>05 / In development</span>
+                      <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #64646e;")}>Single-Cell Perturbation</span>
+                      <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #a3a29b;")}>Single-cell functional response to perturbations.</span>
+                    </div>
+                    <div style={s("background: #f4f3ed; padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 148px;")}>
+                      <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #a3a29b;")}>06 / In development</span>
+                      <span style={s("font-size: 1.02rem; font-weight: 500; letter-spacing: -0.01em; color: #64646e;")}>3D Medical Imaging</span>
+                      <span style={s("font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: #a3a29b;")}>Aligning tomographic medical volumes.</span>
+                    </div>
+                  </>)}
+                </div>
+            </div>
+          </div>
+        </section>
+      
+        <section id="publications" style={s("border-top: 1px solid #e2ded5;")}>
+          <div style={s("max-width: 1240px; margin: 0 auto; padding: 88px 40px;")}>
+            <div>
+              <h2 style={s("font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 200; letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 36px;")}>Recent papers</h2>
+              <div style={s("display: flex; flex-direction: column;")}>
+                <a className="x5" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1" target="_blank" rel="noopener noreferrer" style={s("display: grid; grid-template-columns: 96px minmax(0,1fr) 24px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid #e2ded5; text-decoration: none;")}>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #a3a29b; padding-top: 3px;")}>ISMB 2026</span>
+                  <span><span style={s("display: block; font-size: 0.94rem; font-weight: 400; line-height: 1.5; color: #111113;")}>Joint Modeling of Transcriptomic and Morphological Phenotypes for Generative Molecular Design</span><span style={s("display: block; font-size: 0.78rem; font-weight: 300; color: #a3a29b; margin-top: 5px;")}>M Wang, S Verma et al.</span></span>
+                  <span style={s("color: #a3a29b; text-align: right; padding-top: 3px;")}>↗</span>
+                </a>
+                <a className="x5" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703189v3" target="_blank" rel="noopener noreferrer" style={s("display: grid; grid-template-columns: 96px minmax(0,1fr) 24px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid #e2ded5; text-decoration: none;")}>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #a3a29b; padding-top: 3px;")}>ISMB 2026</span>
+                  <span><span style={s("display: block; font-size: 0.94rem; font-weight: 400; line-height: 1.5; color: #111113;")}>Generating Joint Transcriptomic and Morphological Responses to Drug Perturbations via Rectified Flow</span><span style={s("display: block; font-size: 0.78rem; font-weight: 300; color: #a3a29b; margin-top: 5px;")}>S Verma, M Wang et al.</span></span>
+                  <span style={s("color: #a3a29b; text-align: right; padding-top: 3px;")}>↗</span>
+                </a>
+                <a className="x5" href="https://www.biorxiv.org/content/10.1101/2025.11.02.686114v3" target="_blank" rel="noopener noreferrer" style={s("display: grid; grid-template-columns: 96px minmax(0,1fr) 24px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid #e2ded5; text-decoration: none;")}>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #a3a29b; padding-top: 3px;")}>bioRxiv 2025</span>
+                  <span><span style={s("display: block; font-size: 0.94rem; font-weight: 400; line-height: 1.5; color: #111113;")}>AnnotateAnyCell: Open-Source AI Framework for Efficient Annotation in Digital Pathology</span><span style={s("display: block; font-size: 0.78rem; font-weight: 300; color: #a3a29b; margin-top: 5px;")}>S Verma, A Malusare et al.</span></span>
+                  <span style={s("color: #a3a29b; text-align: right; padding-top: 3px;")}>↗</span>
+                </a>
+                <a className="x5" href="https://arxiv.org/abs/2511.00119" target="_blank" rel="noopener noreferrer" style={s("display: grid; grid-template-columns: 96px minmax(0,1fr) 24px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid #e2ded5; border-bottom: 1px solid #e2ded5; text-decoration: none;")}>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #a3a29b; padding-top: 3px;")}>NeurIPS 2025</span>
+                  <span><span style={s("display: block; font-size: 0.94rem; font-weight: 400; line-height: 1.5; color: #111113;")}>GeneFlow: Translation of Single-cell Gene Expression to Histopathological Images via Rectified Flow</span><span style={s("display: block; font-size: 0.78rem; font-weight: 300; color: #a3a29b; margin-top: 5px;")}>M Wang, S Verma et al.</span></span>
+                  <span style={s("color: #a3a29b; text-align: right; padding-top: 3px;")}>↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <section style={s("border-top: 1px solid #e2ded5; background: #111113;")}>
+          <div style={s("max-width: 1240px; margin: 0 auto; padding: 76px 40px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 48px; align-items: end;")}>
+            <div>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0 0 16px;")}>Get in touch</p>
+              <h2 style={s("font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 200; letter-spacing: -0.03em; line-height: 1.12; color: #f8f7f2; margin: 0; max-width: 26ch;")}>Demo, collaboration, or a conversation about virtual cells.</h2>
+            </div>
+            <button className="x6" onClick={openContact} style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #111113; background: #f8f7f2; border: none; border-radius: 999px; padding: 15px 30px; cursor: pointer; white-space: nowrap; transition: background 0.18s;")}>Contact us</button>
+          </div>
+        </section>
+      
+        <footer style={s("background: #111113; border-top: 1px solid #26262a;")}>
+          <div style={s("max-width: 1240px; margin: 0 auto; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px;")}>
+            <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>© 2026 baiom labs</span>
+            <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>Multi-modal virtual cell world models</span>
+          </div>
+        </footer>
+      
+        {detail && (<>
+          <div onClick={maybeCloseDetail} style={s("position: fixed; inset: 0; z-index: 80; background: rgba(17,17,19,0.32); backdrop-filter: blur(6px); display: flex; justify-content: flex-end;")}>
+            <div style={s("width: min(880px, 100%); height: 100%; overflow-y: auto; background: #f8f7f2; border-left: 1px solid #e2ded5; animation: sheet 0.28s cubic-bezier(0.16,1,0.3,1) both;")}>
+              <div style={s("position: sticky; top: 0; background: rgba(248,247,242,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #e2ded5; padding: 18px 34px; display: flex; align-items: center; justify-content: space-between;")}>
+                <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #a3a29b;")}>Research</span>
+                <button className="x1" onClick={closeDetail} style={s("background: none; border: none; cursor: pointer; font-size: 1.2rem; line-height: 1; color: #64646e;")}>×</button>
+              </div>
+              <div style={s("padding: 38px 34px 56px;")}>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 12px; color: #c04832;")}>{detail.product}</p>
+                <h2 style={s("font-size: 2rem; font-weight: 200; letter-spacing: -0.03em; line-height: 1.14; margin: 0 0 14px;")}>{detail.title}</h2>
+                <p style={s("font-size: 0.94rem; font-weight: 300; line-height: 1.8; color: #64646e; margin: 0 0 14px;")}>{detail.description}</p>
+                <a href={detail.url} target="_blank" rel="noopener noreferrer" style={s("display: inline-flex; gap: 8px; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: #c04832; margin-bottom: 34px;")}>Read the paper ↗</a>
+                <div style={s("display: flex; flex-direction: column; gap: 34px;")}>
+                  {detail.figures.map((fig, i) => (<React.Fragment key={i}>
+                    <div>
+                      <div style={s("border: 1px solid #e2ded5; border-radius: 12px; background: #fdfdfa; overflow: hidden;")}>
+                        <img src={`${import.meta.env.BASE_URL}${fig.slot}`} alt={fig.caption} loading="lazy" style={s("display: block; width: 100%; height: auto;")} />
+                      </div>
+                      <p style={s("font-size: 0.84rem; font-weight: 300; line-height: 1.75; color: #64646e; margin: 12px 0 0;")}>{fig.caption}</p>
+                    </div>
+                  </React.Fragment>))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>)}
+      
+        {contactOpen && (<>
+          <div onClick={maybeCloseContact} style={s("position: fixed; inset: 0; z-index: 90; background: rgba(17,17,19,0.34); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 20px;")}>
+            <div style={s("background: #f8f7f2; border: 1px solid #e2ded5; border-radius: 18px; width: 100%; max-width: 560px; padding: 40px 40px 36px; position: relative; box-shadow: 0 30px 90px rgba(17,17,19,0.18); animation: sheet 0.26s cubic-bezier(0.16,1,0.3,1) both;")}>
+              <button className="x1" onClick={closeContact} style={s("position: absolute; top: 16px; right: 20px; background: none; border: none; cursor: pointer; font-size: 1.3rem; line-height: 1; color: #a3a29b;")}>×</button>
+              <h2 style={s("font-size: 1.7rem; font-weight: 200; letter-spacing: -0.025em; margin: 0 0 4px;")}>Contact us</h2>
+              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #a3a29b; margin: 0 0 30px;")}>Demo · Collaboration · Chat</p>
+              <form onSubmit={submit} style={s("display: flex; flex-direction: column; gap: 16px;")}>
+                <div style={s("display: grid; grid-template-columns: 1fr 1fr; gap: 16px;")}>
+                  <label style={s("display: flex; flex-direction: column; gap: 7px;")}>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>Name</span>
+                    <input className="x7" name="name" type="text" required style={s("width: 100%; padding: 11px 14px; background: #efeee7; border: 1px solid #e2ded5; border-radius: 9px; font-family: Urbanist, sans-serif; font-weight: 300; font-size: 0.92rem; color: #111113; outline: none;")} />
+                  </label>
+                  <label style={s("display: flex; flex-direction: column; gap: 7px;")}>
+                    <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>Affiliation</span>
+                    <input className="x7" name="affiliation" type="text" required style={s("width: 100%; padding: 11px 14px; background: #efeee7; border: 1px solid #e2ded5; border-radius: 9px; font-family: Urbanist, sans-serif; font-weight: 300; font-size: 0.92rem; color: #111113; outline: none;")} />
+                  </label>
+                </div>
+                <label style={s("display: flex; flex-direction: column; gap: 7px;")}>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>Email</span>
+                  <input className="x7" name="email" type="email" required style={s("width: 100%; padding: 11px 14px; background: #efeee7; border: 1px solid #e2ded5; border-radius: 9px; font-family: Urbanist, sans-serif; font-weight: 300; font-size: 0.92rem; color: #111113; outline: none;")} />
+                </label>
+                <label style={s("display: flex; flex-direction: column; gap: 7px;")}>
+                  <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>Message</span>
+                  <textarea className="x7" name="message" rows="4" required style={s("width: 100%; padding: 11px 14px; background: #efeee7; border: 1px solid #e2ded5; border-radius: 9px; font-family: Urbanist, sans-serif; font-weight: 300; font-size: 0.92rem; color: #111113; outline: none; resize: vertical;")}></textarea>
+                </label>
+                <button className="x2" type="submit" style={s("margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #f8f7f2; background: #111113; border: none; border-radius: 9px; padding: 14px; cursor: pointer; transition: background 0.18s;")}>{submitLabel}</button>
+                {status === "error" && (<>
+                  <p style={s("font-size: 0.84rem; font-weight: 300; color: #c04832; text-align: center; margin: 0;")}>Failed to send. Please try again.</p>
+                </>)}
+              </form>
+            </div>
+          </div>
+        </>)}
+      
+      </div>
+    </>
   );
 }
