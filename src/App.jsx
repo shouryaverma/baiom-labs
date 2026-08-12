@@ -125,7 +125,6 @@ export default function App({ showDevelopment = true }) {
           <div style={s("max-width: 1240px; margin: 0 auto; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px;")}>
             <div style={s("display: flex; align-items: baseline; gap: 12px;")}>
               <span style={s("font-size: 17px; font-weight: 500; letter-spacing: -0.01em;")}>baiom labs</span>
-              
             </div>
             <div style={s("display: flex; align-items: center; gap: 28px;")}>
               <a className="x1" href="#products" style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #64646e; text-decoration: none;")}>Products</a>
@@ -135,17 +134,45 @@ export default function App({ showDevelopment = true }) {
           </div>
         </nav>
       
-        <section style={s("max-width: 1240px; margin: 0 auto; padding: 104px 40px 0; animation: fu 0.7s cubic-bezier(0.16,1,0.3,1) both;")}>
-          <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #c04832; margin: 0 0 28px")}>Multi-modal virtual cell world models</p>
-          
-          <h1 style={s("font-size: clamp(1.6rem, 4.4vw, 3.4rem); font-weight: 200; letter-spacing: -0.035em; line-height: 1.04; margin: 0; max-width: 20ch; text-wrap: balance; width: 839px; height: 158px")}>Predicting cell response, before the experiment.</h1><div style={s("display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 64px; align-items: end; margin-top: 44px; padding-bottom: 64px;")}>
-            <p style={s("font-size: 1.4rem; font-weight: 300; line-height: 1.85; color: #64646e; margin: 0; max-width: 46ch")}>We develop models on cellular and molecular data to learn the patterns governing perturbation response.</p>
-            <div style={s("display: flex; flex-direction: column;")}>
-              <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 6px")}>Latest work</p>
-              <a className="x3" href="https://arxiv.org/abs/2511.00119" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5")}><span>GeneFlow — NeurIPS '25</span><span style={s("color: #a3a29b;")}>↗</span></a>
-              <a className="x3" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5")}><span>PertFlow — ISMB '26</span><span style={s("color: #a3a29b;")}>↗</span></a>
-              <a className="x3" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 1rem; font-weight: 300; color: #111113; text-decoration: none; padding: 13px 0; border-top: 1px solid #e2ded5; border-bottom: 1px solid #e2ded5")}><span>Pert2Mol — ISMB '26</span><span style={s("color: #a3a29b;")}>↗</span></a>
+        <section style={s("max-width: 1240px; margin: 0 auto; padding: 64px 40px 56px; animation: fu 0.7s cubic-bezier(0.16,1,0.3,1) both;")}>
+          <div style={s("display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 56px; align-items: stretch;")}>
+            
+            {/* Left Column: Eyebrow + Title + Latest Work */}
+              <div style={s("display: flex; flex-direction: column; height: 100%;")}>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0 0 20px")}>
+                  Multi-modal virtual cell world models
+                </p>
+
+                <h1 style={s("font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 200; letter-spacing: -0.035em; line-height: 1.08; margin: 0 0 36px; text-wrap: balance;")}>
+                  Predicting cell response, before the experiment.
+                </h1>
+
+                <div style={s("display: flex; flex-direction: column; max-width: 480px; margin-top: auto;")}>
+                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 6px")}>Latest work</p>
+                <a className="x3" href="https://arxiv.org/abs/2511.00119" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 0.98rem; font-weight: 300; color: #111113; text-decoration: none; padding: 12px 0; border-top: 1px solid #e2ded5")}><span>GeneFlow — NeurIPS '25</span><span style={s("color: #a3a29b;")}>↗</span></a>
+                <a className="x3" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703193v1" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 0.98rem; font-weight: 300; color: #111113; text-decoration: none; padding: 12px 0; border-top: 1px solid #e2ded5")}><span>PertFlow — ISMB '26</span><span style={s("color: #a3a29b;")}>↗</span></a>
+                <a className="x3" href="https://www.biorxiv.org/content/10.64898/2026.02.02.703189v1" target="_blank" rel="noopener noreferrer" style={s("display: flex; justify-content: space-between; gap: 20px; align-items: baseline; font-size: 0.98rem; font-weight: 300; color: #111113; text-decoration: none; padding: 12px 0; border-top: 1px solid #e2ded5; border-bottom: 1px solid #e2ded5")}><span>Pert2Mol — ISMB '26</span><span style={s("color: #a3a29b;")}>↗</span></a>
+              </div>
             </div>
+
+            {/* Right Column: Video + Description */}
+            <div style={s("display: flex; flex-direction: column; height: 100%;")}>
+              <div style={s("border: 1px solid #e2ded5; border-radius: 14px; overflow: hidden; background: #111113; box-shadow: 0 10px 30px rgba(17,17,19,0.05);")}>
+                <video 
+                  src={`${import.meta.env.BASE_URL}video.mp4`} 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  style={s("width: 100%; height: auto; display: block; object-fit: cover;")} 
+                />
+              </div>
+
+              <p style={s("font-size: 1.2rem; font-weight: 300; line-height: 1.7; color: #64646e; margin: auto 0 0 0;")}>
+                We develop models on cellular and molecular data to learn the patterns governing perturbation response.
+              </p>
+            </div>
+
           </div>
         </section>
       
