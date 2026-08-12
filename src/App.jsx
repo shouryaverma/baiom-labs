@@ -140,7 +140,7 @@ export default function App({ showDevelopment = true }) {
             {/* Left Column: Eyebrow + Title + Latest Work */}
               <div style={s("display: flex; flex-direction: column; height: 100%;")}>
                 <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0 0 20px")}>
-                  Multi-modal virtual cell world models
+                  Virtual cell world models
                 </p>
 
                 <h1 style={s("font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 200; letter-spacing: -0.035em; line-height: 1.08; margin: 0 0 36px; text-wrap: balance;")}>
@@ -367,7 +367,7 @@ export default function App({ showDevelopment = true }) {
         <footer style={s("background: #111113; border-top: 1px solid #26262a;")}>
           <div style={s("max-width: 1240px; margin: 0 auto; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px;")}>
             <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>© 2026 baiom labs</span>
-            <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>Multi-modal virtual cell world models</span>
+            <span style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e;")}>Virtual cell world models</span>
           </div>
         </footer>
       
