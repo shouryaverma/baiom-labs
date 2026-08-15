@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-html { zoom: 1.5; }
+html { zoom: 1.2; }
 html, body { margin: 0; padding: 0; background: #efeee7; }
 #root > div { min-height: calc(100vh / 1.2) !important; }
 * { box-sizing: border-box; }

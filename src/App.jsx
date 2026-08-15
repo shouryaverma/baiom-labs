@@ -169,7 +169,7 @@ export default function App({ showDevelopment = true }) {
               </div>
 
               <p style={s("font-size: 1.2rem; font-weight: 300; line-height: 1.7; color: #64646e; margin: auto 0 0 0;")}>
-                We develop models on cellular and molecular data to learn the patterns governing perturbation response.
+                We develop models on cellular & molecular data to learn the patterns governing perturbation response.
               </p>
             </div>
 
