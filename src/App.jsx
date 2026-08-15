@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.css';
 
 // Parse a CSS text string into a React style object.
@@ -61,6 +61,163 @@ const PRODUCTS = {
     ]
   }
 };
+
+const useMediaQuery = (query) => {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = (e) => setMatches(e.matches);
+    setMatches(mql.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, [query]);
+  return matches;
+};
+
+const ArrowRight = () => (
+  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
+);
+
+const ArrowDown = () => (
+  <svg width="10" height="52" viewBox="0 0 10 52" style={s("overflow: visible;")}><path d="M5,0 L5,42" stroke="#c04832" strokeWidth="1.3"></path><path d="M1.6,40 L5,46 L1.6,40 M8.4,40 L5,46" stroke="#c04832" strokeWidth="1.3" fill="none"></path><circle cx="5" cy="0" r="2.6" fill="#c04832"></circle></svg>
+);
+
+const stageLabel = "font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;";
+
+function StageColumn({ labels }) {
+  return (
+    <div style={s("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 120px; padding: 80px 8px 0;")}>
+      {labels.map((label) => (
+        <div key={label} style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
+          <p style={s(stageLabel)}>{label}</p>
+          <ArrowRight />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function StageRow({ labels }) {
+  return (
+    <div style={s("display: flex; align-items: flex-start; justify-content: center; gap: 64px; padding: 14px 0 10px;")}>
+      {labels.map((label) => (
+        <div key={label} style={s("display: flex; flex-direction: column; align-items: center; gap: 8px;")}>
+          <p style={s(stageLabel)}>{label}</p>
+          <ArrowDown />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function InputsColumn() {
+  return (
+    <div style={s("display: flex; flex-direction: column; gap: 12px;")}>
+      <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0 0 2px")}>Inputs</p>
+      <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+        <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e; margin: 0 0 18px")}>Initial cell state</p>
+        <div style={s("display: flex; flex-direction: column; gap: 16px;")}>
+          <div style={s("display: flex; align-items: center; gap: 14px;")}>
+            <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><circle cx="13" cy="13" r="10.5" fill="none" stroke="#111113" strokeWidth="1.2"></circle><circle cx="13" cy="13" r="3.4" fill="#64646e"></circle></svg>
+            <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>cell images</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>cell morphology</p></div>
+          </div>
+          <div style={s("display: flex; align-items: center; gap: 14px;")}>
+            <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#111113"><rect x="1" y="6" width="7" height="7" opacity="0.8"></rect><rect x="9.5" y="6" width="7" height="7" opacity="0.32"></rect><rect x="18" y="6" width="7" height="7" opacity="0.6"></rect><rect x="1" y="14.5" width="7" height="7" opacity="0.42"></rect><rect x="9.5" y="14.5" width="7" height="7" opacity="0.72"></rect><rect x="18" y="14.5" width="7" height="7" opacity="0.28"></rect></g></svg>
+            <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>gene expression</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression profile</p></div>
+          </div>
+          <div style={s("display: flex; align-items: center; gap: 14px;")}>
+            <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#111113"><circle cx="4" cy="4" r="2.6" opacity="0.85"></circle><circle cx="13" cy="4" r="2.6" opacity="0.35"></circle><circle cx="22" cy="4" r="2.6" opacity="0.65"></circle><circle cx="4" cy="13" r="2.6" opacity="0.5"></circle><circle cx="13" cy="13" r="2.6" opacity="0.9"></circle><circle cx="22" cy="13" r="2.6" opacity="0.25"></circle><circle cx="4" cy="22" r="2.6" opacity="0.6"></circle><circle cx="13" cy="22" r="2.6" opacity="0.8"></circle><circle cx="22" cy="22" r="2.6" opacity="0.45"></circle></g></svg>
+            <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>spatial transcriptomics</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression map</p></div>
+          </div>
+        </div>
+      </div>
+      <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+        <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e; margin: 0 0 14px;")}>Perturbation type</p>
+        <div style={s("display: flex; flex-wrap: wrap; gap: 8px;")}>
+          <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Drug</span>
+          <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Genetic</span>
+          <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Cytokine</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CoreCard({ stacked }) {
+  return (
+    <div style={s(stacked
+      ? "background: #efeee7; border: 1px solid #d4cfc3; border-radius: 18px; padding: 24px 22px; box-shadow: 0 14px 44px rgba(17,17,19,0.06);"
+      : "background: #efeee7; border: 1px solid #d4cfc3; border-radius: 18px; padding: 26px 22px; margin-top: 80px; box-shadow: 0 14px 44px rgba(17,17,19,0.06);")}>
+      <p style={s("font-size: 1.02rem; font-weight: 500; color: #c04832; text-align: center; margin: 0;")}>VirSCell-1</p>
+      <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #111113; text-align: center; margin: 6px 0 22px;")}>Virtual Cell World Model</p>
+      <svg viewBox="0 0 140 96" width="100%" style={s(stacked ? "display: block; height: auto; max-width: 300px; margin: 0 auto;" : "display: block; height: auto;")}>
+        <g stroke="#c04832" strokeWidth="1.1" opacity="0.3"><path d="M22,12 L118,12"></path><path d="M22,36 L118,36"></path><path d="M22,60 L118,60"></path><path d="M22,84 L118,84"></path></g>
+        <g stroke="#a3a29b" strokeWidth="0.9" opacity="0.5"><path d="M22,12 L118,84"></path><path d="M22,84 L118,12"></path><path d="M22,36 L118,60"></path><path d="M22,60 L118,36"></path></g>
+        <g fill="#111113"><circle cx="22" cy="12" r="3"></circle><circle cx="22" cy="36" r="3"></circle><circle cx="22" cy="60" r="3"></circle><circle cx="22" cy="84" r="3"></circle><circle cx="118" cy="12" r="3"></circle><circle cx="118" cy="36" r="3"></circle><circle cx="118" cy="60" r="3"></circle><circle cx="118" cy="84" r="3"></circle></g>
+      </svg>
+    </div>
+  );
+}
+
+function OutputsColumn({ stacked }) {
+  return (
+    <div style={s("display: flex; flex-direction: column; gap: 12px;")}>
+      <p style={s(stacked
+        ? "font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0 0 2px"
+        : "font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0 0 2px; text-align: right")}>Outputs</p>
+      <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+        <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 18px")}>Perturbed cell state</p>
+        <div style={s("display: flex; flex-direction: column; gap: 16px;")}>
+          <div style={s("display: flex; align-items: center; gap: 14px;")}>
+            <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><circle cx="13" cy="13" r="10.5" fill="none" stroke="#111113" strokeWidth="1.2"></circle><circle cx="15" cy="14.6" r="3.4" fill="#c04832"></circle></svg>
+            <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>cell images</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>cell morphology</p></div>
+          </div>
+          <div style={s("display: flex; align-items: center; gap: 14px;")}>
+            <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#c04832"><rect x="1" y="6" width="7" height="7" opacity="0.35"></rect><rect x="9.5" y="6" width="7" height="7" opacity="0.8"></rect><rect x="18" y="6" width="7" height="7" opacity="0.28"></rect><rect x="1" y="14.5" width="7" height="7" opacity="0.72"></rect><rect x="9.5" y="14.5" width="7" height="7" opacity="0.4"></rect><rect x="18" y="14.5" width="7" height="7" opacity="0.62"></rect></g></svg>
+            <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>gene expression</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression profile</p></div>
+          </div>
+          <div style={s("display: flex; align-items: center; gap: 14px;")}>
+            <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#c04832"><circle cx="4" cy="4" r="2.6" opacity="0.5"></circle><circle cx="13" cy="4" r="2.6" opacity="0.85"></circle><circle cx="22" cy="4" r="2.6" opacity="0.3"></circle><circle cx="4" cy="13" r="2.6" opacity="0.9"></circle><circle cx="13" cy="13" r="2.6" opacity="0.45"></circle><circle cx="22" cy="13" r="2.6" opacity="0.7"></circle><circle cx="4" cy="22" r="2.6" opacity="0.35"></circle><circle cx="13" cy="22" r="2.6" opacity="0.6"></circle><circle cx="22" cy="22" r="2.6" opacity="0.8"></circle></g></svg>
+            <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>spatial transcriptomics</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression map</p></div>
+          </div>
+        </div>
+      </div>
+      <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
+        <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 14px;")}>Inverse drug design</p>
+        <div style={s("display: flex; align-items: center; gap: 14px;")}>
+          <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g transform="translate(13 13) rotate(-45)"><rect x="-11" y="-5.5" width="22" height="11" rx="5.5" fill="none" stroke="#c04832" strokeWidth="1.4"></rect><path d="M0,-5.5 L-5.5,-5.5 A5.5,5.5 0 0,0 -5.5,5.5 L0,5.5 Z" fill="#c04832"></path></g></svg>
+          <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>candidate drug</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>perturbation toward target</p></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ModelDiagram() {
+  const stacked = useMediaQuery('(max-width: 1000px)');
+
+  if (stacked) {
+    return (
+      <div style={s("display: flex; flex-direction: column;")}>
+        <InputsColumn />
+        <StageRow labels={['Encode', 'Condition']} />
+        <CoreCard stacked />
+        <StageRow labels={['Predict', 'Design']} />
+        <OutputsColumn stacked />
+      </div>
+    );
+  }
+
+  return (
+    <div style={s("display: grid; grid-template-columns: minmax(0,1fr) 96px minmax(0,0.72fr) 96px minmax(0,1fr); align-items: center; gap: 0;")}>
+      <InputsColumn />
+      <StageColumn labels={['Encode', 'Condition']} />
+      <CoreCard />
+      <StageColumn labels={['Predict', 'Design']} />
+      <OutputsColumn />
+    </div>
+  );
+}
 
 export default function App({ showDevelopment = true }) {
   const [detailKey, setDetailKey] = useState(null);
@@ -182,99 +339,7 @@ export default function App({ showDevelopment = true }) {
               <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0")}>The model</p>
               <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0")}>VirSCell-1</p>
             </div>
-
-            <div className="model-grid" style={s("display: grid; grid-template-columns: minmax(0,1fr) 96px minmax(0,0.72fr) 96px minmax(0,1fr); align-items: center; gap: 0;")}>
-
-              <div style={s("display: flex; flex-direction: column; gap: 12px;")}>
-                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0 0 2px")}>Inputs</p>
-                <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e; margin: 0 0 18px")}>Initial cell state</p>
-                  <div style={s("display: flex; flex-direction: column; gap: 16px;")}>
-                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
-                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><circle cx="13" cy="13" r="10.5" fill="none" stroke="#111113" strokeWidth="1.2"></circle><circle cx="13" cy="13" r="3.4" fill="#64646e"></circle></svg>
-                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>cell images</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>cell morphology</p></div>
-                    </div>
-                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
-                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#111113"><rect x="1" y="6" width="7" height="7" opacity="0.8"></rect><rect x="9.5" y="6" width="7" height="7" opacity="0.32"></rect><rect x="18" y="6" width="7" height="7" opacity="0.6"></rect><rect x="1" y="14.5" width="7" height="7" opacity="0.42"></rect><rect x="9.5" y="14.5" width="7" height="7" opacity="0.72"></rect><rect x="18" y="14.5" width="7" height="7" opacity="0.28"></rect></g></svg>
-                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>gene expression</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression profile</p></div>
-                    </div>
-                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
-                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#111113"><circle cx="4" cy="4" r="2.6" opacity="0.85"></circle><circle cx="13" cy="4" r="2.6" opacity="0.35"></circle><circle cx="22" cy="4" r="2.6" opacity="0.65"></circle><circle cx="4" cy="13" r="2.6" opacity="0.5"></circle><circle cx="13" cy="13" r="2.6" opacity="0.9"></circle><circle cx="22" cy="13" r="2.6" opacity="0.25"></circle><circle cx="4" cy="22" r="2.6" opacity="0.6"></circle><circle cx="13" cy="22" r="2.6" opacity="0.8"></circle><circle cx="22" cy="22" r="2.6" opacity="0.45"></circle></g></svg>
-                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>spatial transcriptomics</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression map</p></div>
-                    </div>
-                  </div>
-                </div>
-                <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #64646e; margin: 0 0 14px;")}>Perturbation type</p>
-                  <div style={s("display: flex; flex-wrap: wrap; gap: 8px;")}>
-                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Drug</span>
-                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Genetic</span>
-                    <span style={s("font-size: 0.84rem; font-weight: 400; padding: 7px 15px; border: 1.3px solid #111113; border-radius: 999px; background: #f4f3ed;")}>Cytokine</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="arrow-col" style={s("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 120px; padding: 80px 8px 0;")}>
-                <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Encode</p>
-                  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
-                </div>
-                <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Condition</p>
-                  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
-                </div>
-              </div>
-
-              <div className="model-core" style={s("background: #efeee7; border: 1px solid #d4cfc3; border-radius: 18px; padding: 26px 22px; margin-top: 80px; box-shadow: 0 14px 44px rgba(17,17,19,0.06);")}>
-                <p style={s("font-size: 1.02rem; font-weight: 500; color: #c04832; text-align: center; margin: 0;")}>VirSCell-1</p>
-                <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #111113; text-align: center; margin: 6px 0 22px;")}>Virtual Cell World Model</p>
-                <svg viewBox="0 0 140 96" width="100%" style={s("display: block; height: auto;")}>
-                  <g stroke="#c04832" strokeWidth="1.1" opacity="0.3"><path d="M22,12 L118,12"></path><path d="M22,36 L118,36"></path><path d="M22,60 L118,60"></path><path d="M22,84 L118,84"></path></g>
-                  <g stroke="#a3a29b" strokeWidth="0.9" opacity="0.5"><path d="M22,12 L118,84"></path><path d="M22,84 L118,12"></path><path d="M22,36 L118,60"></path><path d="M22,60 L118,36"></path></g>
-                  <g fill="#111113"><circle cx="22" cy="12" r="3"></circle><circle cx="22" cy="36" r="3"></circle><circle cx="22" cy="60" r="3"></circle><circle cx="22" cy="84" r="3"></circle><circle cx="118" cy="12" r="3"></circle><circle cx="118" cy="36" r="3"></circle><circle cx="118" cy="60" r="3"></circle><circle cx="118" cy="84" r="3"></circle></g>
-                </svg>
-              </div>
-
-              <div className="arrow-col" style={s("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 120px; padding: 80px 8px 0;")}>
-                <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Predict</p>
-                  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
-                </div>
-                <div style={s("display: flex; flex-direction: column; align-items: center; gap: 6px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c04832; margin: 0;")}>Design</p>
-                  <svg width="80" height="10" viewBox="0 0 80 10" style={s("overflow: visible;")}><path d="M0,5 L70,5" stroke="#c04832" strokeWidth="1.3"></path><path d="M68,1.6 L74,5 L68,8.4" fill="#c04832"></path><circle cx="0" cy="5" r="2.6" fill="#c04832"></circle></svg>
-                </div>
-              </div>
-
-              <div style={s("display: flex; flex-direction: column; gap: 12px;")}>
-                <p className="outputs-label" style={s("font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: #f8f7f2; margin: 0 0 2px; text-align: right")}>Outputs</p>
-                <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 18px")}>Perturbed cell state</p>
-                  <div style={s("display: flex; flex-direction: column; gap: 16px;")}>
-                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
-                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><circle cx="13" cy="13" r="10.5" fill="none" stroke="#111113" strokeWidth="1.2"></circle><circle cx="15" cy="14.6" r="3.4" fill="#c04832"></circle></svg>
-                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>cell images</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>cell morphology</p></div>
-                    </div>
-                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
-                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#c04832"><rect x="1" y="6" width="7" height="7" opacity="0.35"></rect><rect x="9.5" y="6" width="7" height="7" opacity="0.8"></rect><rect x="18" y="6" width="7" height="7" opacity="0.28"></rect><rect x="1" y="14.5" width="7" height="7" opacity="0.72"></rect><rect x="9.5" y="14.5" width="7" height="7" opacity="0.4"></rect><rect x="18" y="14.5" width="7" height="7" opacity="0.62"></rect></g></svg>
-                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>gene expression</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression profile</p></div>
-                    </div>
-                    <div style={s("display: flex; align-items: center; gap: 14px;")}>
-                      <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g fill="#c04832"><circle cx="4" cy="4" r="2.6" opacity="0.5"></circle><circle cx="13" cy="4" r="2.6" opacity="0.85"></circle><circle cx="22" cy="4" r="2.6" opacity="0.3"></circle><circle cx="4" cy="13" r="2.6" opacity="0.9"></circle><circle cx="13" cy="13" r="2.6" opacity="0.45"></circle><circle cx="22" cy="13" r="2.6" opacity="0.7"></circle><circle cx="4" cy="22" r="2.6" opacity="0.35"></circle><circle cx="13" cy="22" r="2.6" opacity="0.6"></circle><circle cx="22" cy="22" r="2.6" opacity="0.8"></circle></g></svg>
-                      <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>spatial transcriptomics</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>expression map</p></div>
-                    </div>
-                  </div>
-                </div>
-                <div style={s("background: #efeee7; border: 1px solid #e2ded5; border-radius: 14px; padding: 20px 22px;")}>
-                  <p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #c04832; margin: 0 0 14px;")}>Inverse drug design</p>
-                  <div style={s("display: flex; align-items: center; gap: 14px;")}>
-                    <svg width="26" height="26" viewBox="0 0 26 26" style={s("flex: none;")}><g transform="translate(13 13) rotate(-45)"><rect x="-11" y="-5.5" width="22" height="11" rx="5.5" fill="none" stroke="#c04832" strokeWidth="1.4"></rect><path d="M0,-5.5 L-5.5,-5.5 A5.5,5.5 0 0,0 -5.5,5.5 L0,5.5 Z" fill="#c04832"></path></g></svg>
-                    <div><p style={s("font-size: 0.9rem; font-weight: 500; margin: 0;")}>candidate drug</p><p style={s("font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a3a29b; margin: 2px 0 0;")}>perturbation toward target</p></div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+            <ModelDiagram />
           </div>
         </section>
 
