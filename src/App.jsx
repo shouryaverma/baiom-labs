@@ -310,7 +310,7 @@ body { margin: 0; background: var(--paper); }
 .link-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .link-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
 .arrow-v { display: none; }
-.flow { stroke: #c04832; stroke-width: 1.3; stroke-dasharray: 4 5; animation: dash 1.2s linear infinite; }
+.flow { stroke: #c04832; stroke-width: 1.3; }
 .core {
   align-self: center;
   background: linear-gradient(180deg, rgba(248, 247, 242, 0.08), rgba(248, 247, 242, 0.03));
@@ -330,7 +330,7 @@ body { margin: 0; background: var(--paper); }
 }
 .core svg { display: block; width: 100%; height: auto; max-width: 300px; margin: 0 auto; }
 .net-rows path { fill: none; stroke: #c04832; stroke-width: 1.1; opacity: 0.35; }
-.net-cross path { fill: none; stroke: #9a9aa3; stroke-width: 0.9; opacity: 0.6; stroke-dasharray: 3 4; animation: dash 1.6s linear infinite; }
+.net-cross path { fill: none; stroke: #9a9aa3; stroke-width: 0.9; opacity: 0.6; }
 .node { transform-box: fill-box; transform-origin: center; animation: pulse 3s ease-in-out infinite; }
 .node-in { fill: #f8f7f2; }
 .node-out { fill: #c04832; }
@@ -540,7 +540,7 @@ body { margin: 0; background: var(--paper); }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slide { from { transform: translateX(32px); opacity: 0; } to { transform: none; opacity: 1; } }
 @keyframes pop { from { transform: translateY(14px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } }
-@keyframes dash { to { stroke-dashoffset: -9; } }
+
 @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.85; } 50% { transform: scale(1.4); opacity: 1; } }
 
 /* diagram placement, desktop */
